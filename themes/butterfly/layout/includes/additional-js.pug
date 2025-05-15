@@ -48,6 +48,9 @@ div
   if theme.pjax.enable
     != partial("includes/third-party/pjax", {}, { cache: true })
 
+  if theme.pwa.enable
+    !=partial('includes/third-party/pwanotice', {}, {cache: true})
+
   if theme.umami_analytics.enable
     != partial("includes/third-party/umami_analytics", {}, { cache: true })
 

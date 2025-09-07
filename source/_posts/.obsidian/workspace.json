@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "first.md",
+                "file": "blog.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "first"
+              "title": "blog"
             }
           }
         ]
@@ -160,6 +160,8 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "markdown-importer:打开 Markdown 格式转换器": false,
+      "bases:创建新数据库": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "canvas:新建白板": false,
@@ -170,9 +172,51 @@
   },
   "active": "edcecca8239319f4",
   "lastOpenFiles": [
-    "tttt.md",
-    "xxx.md",
     "first.md",
-    "hello-world.md"
+    "blog.md",
+    "Csharp/1基础/1数据类型/3值类型和引用类型.md",
+    "Csharp/1基础/1数据类型/_resources/2数组/a1089750639ba6b8d3a1b5f9e89587c5_MD5.jpeg",
+    "Csharp/_resources/1 ref和out/641fd6ca17440c3b36bc69bbb3425bd7_MD5.jpeg",
+    "blog/更新博客/图片更新及文章更新.md",
+    "Markdown/基本用法.md",
+    "Git/1Git基本概念/3获取本地仓库.md",
+    "Git/1Git基本概念/2概述及配置.md",
+    "Git/1Git基本概念/1学习目标.md",
+    "Second.md",
+    "second.md",
+    "数据结构复习/1线性表/1选填/1增删查改.md",
+    "_resources/标记/aef54e1836a447df79883f8324b40baf_MD5.jpeg",
+    "_resources/标记/ac83b9a4e747d60e34b860b2c0f7485c_MD5.jpeg",
+    "_resources/标记/3e6f552633a45a813881ab609281febb_MD5.jpeg",
+    "_resources/标记/173a0d4689c6bbfc582f982b8b4da8b7_MD5.jpeg",
+    "_resources/标记/55ec3c49fa98e53236ae248e3ff0f546_MD5.jpeg",
+    "_resources/标记/9a0ee2095f23fb78de5f239a57e57d18_MD5.jpeg",
+    "_resources/标记",
+    "_resources/有关树的计算公式/78712cf6a8fb0f3588e816c09980e395_MD5.jpeg",
+    "_resources/有关树的计算公式/e537eba81403e4d3d36b4c2ab4e06d3d_MD5.jpeg",
+    "_resources/有关树的计算公式",
+    "_resources/最短路径",
+    "_resources/基本用法",
+    "_resources/图片更新等",
+    "_resources/哈夫曼树编码",
+    "_resources/Camera代码相关",
+    "_resources/8静态类和静态构造函数",
+    "_resources/6索引器",
+    "_resources/5结构体和类的区别",
+    "数据结构复习/2树和图/3求路径的算法/1最短路径/最短路径.md",
+    "数据结构复习/2树和图/2图/1图的创建/邻接矩阵.md",
+    "数据结构复习/2树和图/1树/有关树的计算公式.md",
+    "数据结构复习/2树和图/1树/哈夫曼树编码.md",
+    "数据结构复习/1线性表/1选填/5模式匹配算法.md",
+    "数据结构复习/1线性表/1选填/4时间复杂度.md",
+    "数据结构复习/1线性表/1选填/3存储.md",
+    "数据结构复习/1线性表/1选填/2栈和队列.md",
+    "数据结构复习/1线性表/2大题/2队列的两种实现方式.md",
+    "数据结构复习/1线性表/2大题/1线性表的反转.md",
+    "数据结构复习/3排序算法/3快速排序.md",
+    "数据结构复习/3排序算法/1排序算法.md",
+    "数据结构复习/3排序算法/2堆排序.md",
+    "Unity/1入门/7核心系统/1光源系统基础.md",
+    "Unity/1入门/6Camera/Camera代码相关.md"
   ]
 }

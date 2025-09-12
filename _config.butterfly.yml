@@ -27,7 +27,7 @@ menu:
 # --------------------------------------
 
 code_blocks:
-  # Code block theme: darker / pale night / light / ocean / false
+  Code block theme: ocean # darker / pale night / light / ocean / false
   theme: light
   macStyle: false
   # Code block height limit (unit: px)

@@ -36,7 +36,7 @@ __这篇文章用于记录更新博客相关的一些操作。__
 
 ![](https://tymimg.yuzhiboliuhua.cn/post1/10.jpeg)
 更改绿色部分点击提交
-
 ```
 #include <stdio.h>
+im good
 ```

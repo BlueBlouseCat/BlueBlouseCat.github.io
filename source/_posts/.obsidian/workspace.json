@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "blog.md",
+                "file": "first.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "blog"
+              "title": "first"
             }
           }
         ]
@@ -172,8 +172,8 @@
   },
   "active": "edcecca8239319f4",
   "lastOpenFiles": [
-    "first.md",
     "blog.md",
+    "first.md",
     "Csharp/1基础/1数据类型/3值类型和引用类型.md",
     "Csharp/1基础/1数据类型/_resources/2数组/a1089750639ba6b8d3a1b5f9e89587c5_MD5.jpeg",
     "Csharp/_resources/1 ref和out/641fd6ca17440c3b36bc69bbb3425bd7_MD5.jpeg",

@@ -1,6 +1,12 @@
 ---
 title: 图片更新及文章更新
+tags:
+  - 博客
+date: 2025-9-12 12:12
 cover: https://tymimg.yuzhiboliuhua.cn/post1/cover1.jpg
+---
+__这篇文章用于记录更新博客相关的一些操作。__
+
 ---
 # 图片更新
 ## 上传图片到仓库中
@@ -15,6 +21,8 @@ cover: https://tymimg.yuzhiboliuhua.cn/post1/cover1.jpg
 ## 修改顶图
 在VSCode中用Ctrl + F 快捷键打开搜索top，修改地址
 ![](https://tymimg.yuzhiboliuhua.cn/post1/5.jpeg)
+
+---
 # 更新文章
 在此目录下找到obsidian，在obsidian新建文件，注意文件名只能是英文
 ![](https://tymimg.yuzhiboliuhua.cn/post1/6.jpeg)
@@ -28,3 +36,7 @@ cover: https://tymimg.yuzhiboliuhua.cn/post1/cover1.jpg
 
 ![](https://tymimg.yuzhiboliuhua.cn/post1/10.jpeg)
 更改绿色部分点击提交
+
+```
+#include <stdio.h>
+```

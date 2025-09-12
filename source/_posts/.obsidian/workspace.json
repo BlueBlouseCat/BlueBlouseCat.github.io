@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "first.md",
+                "file": "blog.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "first"
+              "title": "blog"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "first.md",
+                "file": "blog.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "first 的反向链接列表"
+              "title": "blog 的反向链接列表"
             }
           },
           {
@@ -155,8 +155,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -172,8 +171,16 @@
   },
   "active": "edcecca8239319f4",
   "lastOpenFiles": [
-    "blog.md",
     "first.md",
+    "blog.md",
+    "about/index.md",
+    "about",
+    "link/index.md",
+    "link",
+    "movies/index.md",
+    "movies",
+    "music/index.md",
+    "music",
     "Csharp/1基础/1数据类型/3值类型和引用类型.md",
     "Csharp/1基础/1数据类型/_resources/2数组/a1089750639ba6b8d3a1b5f9e89587c5_MD5.jpeg",
     "Csharp/_resources/1 ref和out/641fd6ca17440c3b36bc69bbb3425bd7_MD5.jpeg",
@@ -199,10 +206,6 @@
     "_resources/基本用法",
     "_resources/图片更新等",
     "_resources/哈夫曼树编码",
-    "_resources/Camera代码相关",
-    "_resources/8静态类和静态构造函数",
-    "_resources/6索引器",
-    "_resources/5结构体和类的区别",
     "数据结构复习/2树和图/3求路径的算法/1最短路径/最短路径.md",
     "数据结构复习/2树和图/2图/1图的创建/邻接矩阵.md",
     "数据结构复习/2树和图/1树/有关树的计算公式.md",
@@ -213,10 +216,6 @@
     "数据结构复习/1线性表/1选填/2栈和队列.md",
     "数据结构复习/1线性表/2大题/2队列的两种实现方式.md",
     "数据结构复习/1线性表/2大题/1线性表的反转.md",
-    "数据结构复习/3排序算法/3快速排序.md",
-    "数据结构复习/3排序算法/1排序算法.md",
-    "数据结构复习/3排序算法/2堆排序.md",
-    "Unity/1入门/7核心系统/1光源系统基础.md",
-    "Unity/1入门/6Camera/Camera代码相关.md"
+    "数据结构复习/3排序算法/3快速排序.md"
   ]
 }

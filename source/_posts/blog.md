@@ -24,6 +24,8 @@ __这篇文章用于记录更新博客相关的一些操作。__
 
 ---
 # 更新文章
+
+1
 在此目录下找到obsidian，在obsidian新建文件，注意文件名只能是英文
 ![](https://tymimg.yuzhiboliuhua.cn/post1/6.jpeg)
 打开源码模式

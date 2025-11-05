@@ -145,3 +145,52 @@ plugins:
     - hexo-generator-feed
     - hexo-generator-baidu-sitemap
     - hexo-generator-sitemap
+
+# footer_beautify
+# 页脚计时器：[Native JS Timer](https://akilar.top/posts/b941af/)
+# 页脚徽标：[Add Github Badge](https://akilar.top/posts/e87ad7f8/)
+footer_beautify:
+  enable:
+    timer: false # 计时器开关
+    bdage: true # 徽标开关
+  priority: 5 #过滤器优先权
+  enable_page: all # 应用页面
+  exclude: #屏蔽页面
+    # - /posts/
+    # - /about/
+  layout: # 挂载容器类型
+    type: id
+    name: footer-wrap
+    index: 0
+  # 计时器部分配置项（看你喜欢哪个，最好下载下来放到自己的项目中不然会增加我网站的负载）
+  # 这是我的  
+  runtime_js: https://www.fomal.cc/static/js/runtime.js
+  runtime_css: https://www.fomal.cc/static/css/runtime.min.css 
+  # # 这是店长的 
+  # runtime_js: https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.js
+  # runtime_css: https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.css
+  # 徽标部分配置项
+  swiperpara: 0 #若非0，则开启轮播功能，每行徽标个数
+  bdageitem:
+    - link: https://hexo.io/ #徽标指向网站链接
+      shields: https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo #徽标API
+      message: 博客框架为Hexo_v6.2.0 #徽标提示语
+    - link: https://butterfly.js.org/
+      shields: https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender
+      message: 主题版本Butterfly_v4.3.1
+    # - link: https://vercel.com/
+    #   shields: https://img.shields.io/badge/Hosted-Vercel-brightgreen?style=flat&logo=Vercel
+    #   message: 本站采用多线部署，主线路托管于Vercel
+    # - link: https://dashboard.4everland.org/
+    # # https://img.shields.io/badge/Hosted-4EVERLAND-3FE2C1?style=flat&logo=IPFS
+    #   shields: https://img.shields.io/badge/Hosted-4EVERLAND-22DDDD?style=flat&logo=IPFS
+    #   message: 本站采用多线部署，备用线路托管于4EVERLAND
+    - link: https://github.com/
+      shields: https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub
+      message: 本站项目由Github托管
+    - link: http://creativecommons.org/licenses/by-nc-sa/4.0/
+      shields: https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris
+      message: 本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可
+  swiper_css: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css
+  swiper_js: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js
+  swiperbdage_init_js: https://npm.elemecdn.com/hexo-butterfly-footer-beautify/lib/swiperbdage_init.min.js

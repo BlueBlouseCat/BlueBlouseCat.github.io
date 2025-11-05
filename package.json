@@ -16,6 +16,7 @@
     "gulp": "^5.0.0",
     "gulp-htmlmin": "^5.0.1",
     "hexo": "^7.3.0",
+    "hexo-butterfly-footer-beautify": "^1.0.6",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-category": "^2.0.0",
     "hexo-generator-feed": "^3.0.0",

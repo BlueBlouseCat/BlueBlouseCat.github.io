@@ -90,7 +90,7 @@ footer_img: false
 
 # Website Background
 # Can set it to color or image url
-background:
+background: https://tymimg.yuzhiboliuhua.cn/壁纸.jpg
 
 cover:
   # Disable the cover or not

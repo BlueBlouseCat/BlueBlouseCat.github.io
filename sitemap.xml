@@ -2,15 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://tymblog.yuzhiboliuhua.cn/link/index.html</loc>
-    
-    <lastmod>2025-11-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://tymblog.yuzhiboliuhua.cn/2025/11/01/C/</loc>
     
     <lastmod>2025-11-06</lastmod>
@@ -29,15 +20,6 @@
   </url>
   
   <url>
-    <loc>http://tymblog.yuzhiboliuhua.cn/2025/09/12/blog/</loc>
-    
-    <lastmod>2025-11-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://tymblog.yuzhiboliuhua.cn/2025/11/06/first/</loc>
     
     <lastmod>2025-11-06</lastmod>
@@ -47,7 +29,25 @@
   </url>
   
   <url>
+    <loc>http://tymblog.yuzhiboliuhua.cn/2025/09/12/blog/</loc>
+    
+    <lastmod>2025-11-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://tymblog.yuzhiboliuhua.cn/about/index.html</loc>
+    
+    <lastmod>2025-11-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://tymblog.yuzhiboliuhua.cn/link/index.html</loc>
     
     <lastmod>2025-11-06</lastmod>
     

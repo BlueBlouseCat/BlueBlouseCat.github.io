@@ -1,10 +1,11 @@
 ---
 title: Unity之物理系统
 tag:
-- Unity
-- 物理系统
+  - Unity
+  - 物理系统
 date: 2025-11-04 14:58
 cover: https://tymimg.yuzhiboliuhua.cn/Cover/UnityBlenderT.png
+categories: Unity
 ---
 这篇文章记录了Unity中物理系统相关（未完待续）
 

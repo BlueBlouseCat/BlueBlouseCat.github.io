@@ -210,7 +210,7 @@ xml.AppendChild(root);
 
 // 4.1 为根节点添加子节点
 XmlElement name = xml.CreateElement("name");
-name.InnerText = "梅梅酱";                                 
+name.InnerText = "小明";                                 
 root.AppendChild(name);
 
 // 4.2 为子节点添加子节点
@@ -267,3 +267,5 @@ if( File.Exists(path) ) // File是自带的类
 	newXml.Save(path);
 }
 ```
+
+## XML序列化

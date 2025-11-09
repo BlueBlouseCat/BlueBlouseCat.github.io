@@ -268,4 +268,219 @@ if( File.Exists(path) ) // File是自带的类
 }
 ```
 
-## XML序列化
+## XML序列化与反序列化
+### 序列化
+0. 定义：把 对象 转化为 可传输的字节序列 过程
+
+1. 几个关键类：
+- XmlSerializer 用于序列化对象为xml
+- StreamWriter 用于存储文件
+- using 用于方便流对象释放和销毁
+
+2. 序列化
+```
+using System.IO; // 使用 StreamWriter 时要引用的命名空间
+using System.Xml.Serialization; 
+
+public class Lesson1Test
+{
+	// 这是我想要保存的类对象
+}
+
+public class Main : MonoBehaviour
+{
+	void Start()
+	{
+		// 1. 准备一个想要保存的类
+		Lesson1Test lt = new Lesson1Test();
+		
+		
+		// 2. 序列化
+		// 2.1 确定存储路径
+		string path = Application.persistentDataPath + "/Test.xml";
+		
+		// 2.2 写入文件
+		// 括号内的代码：写入一个文件流，如果有该文件直接打开并修改，如果没有直接新建
+		// using 的新用法：括号当中包裹的声明的对象 会在 大括号语句块结束后自动释放
+		using ( StreamWriter stream = new StreamWriter(path) )
+		{
+			// 声明一个序列化翻译器
+			XmlSerializer s = new XmlSerializer(typeof(Lesson1Test));
+			
+			// 通过Serialize方法进行序列化翻译
+			// 参数1：文件流对象
+			// 参数2：想要被翻译的对象
+			// 注意：翻译机器的类型要和传入的对象是一致的
+			s.Serialize(stream, lt);
+		}
+	}
+}
+```
+
+**注意：序列化只支持`public`，不支持字典**
+
+3. 以属性方式存储：
+加上一个特性：`[XmlAttribute()]` ，括号里面可以传想要的属性名（字符串形式）
+
+4. 给元素改名字：
+- 普通元素：`[XmlElement()]`
+- List：`[XmlArray()]`
+- List里面的元素：`[XmlArrayItem()]`
+
+### 反序列化
+0. 定义：把 字节序列 还原为 对象 的过程
+
+1. 反序列化：
+```
+using System.IO;
+using System.Xml.Serialization; 
+
+// 0.写出要反序列化对象所在路径
+string path = Application.persistentDataPath + "/Lesson1Test.xml";
+// 1. 判断文件是否存在
+if( File.Exists(path) )
+{
+	// 2. 反序列化
+	// 2.1 读取文件
+	using (StreamReader reader = new StreamReader(path))
+	{
+		// 声明一个反序列化翻译器
+		XmlSerializer s = new XmlSerializer(typeof(Lesson1Test));
+		
+		// 通过DeSerialize方法进行反序列化翻译
+		// 参数：想要反序列化的对象
+		Lesson1Test lt = s.DeSerialize(reader) as Lesson1Test;
+	}
+}
+```
+
+**注意：List对象如果有默认值，反序列化时不会清空，会在后面添加**
+
+### Ixmlserializable 接口
+1. 定义：`Ixmlserializable`是`XmlSerializer`提供的可拓展内容。他能让一些不能被序列化和反序列化的特殊类能被处理。
+
+2. 自定义类实践：
+```
+public class Test1 : Ixmlserializable
+{
+	public int test1;
+	
+	// 下面是实现这个接口后要实现的方法
+	
+	public XmlSchema GetSchema()
+	{
+		return null;
+	}
+	
+	public void ReadXml(XmlReader reader)
+	{
+		// 反序列化时自动调用
+		// 1. 读属性
+		this.test1 = int.Parse(reader["test1"]);
+		// 2. 读节点
+		// 方式1：
+		reader.Read(); // 这时是读到根节点
+		reader.Read(); // 这时是读到test1前面包裹节点
+		this.test1 = int.Parse(reaser.Value()); // 得到当前内容的值
+		reader.Read(); // 这时是读到test1尾部包裹节点
+		// 方式2：
+		while( reader.Read() )
+		{
+			if( reader.NodeType == XmlNodeType.Element )
+			{
+				switch(reader.Name)
+				{
+					case "test1":
+						reader.Read();
+						this.test1 = int.Parse(reader.Value);
+						break;
+				}
+			}
+		}
+		// 3. 读包裹元素节点
+		XmlSerializer s = new XmlSerializer(typeof(int));
+		// 跳过根节点
+		reader.Read();
+		reader.ReadStartElement("test1");
+		test1 = (int)s.Deserialize(reader);
+		reader.ReadEndElement();
+	}
+	
+	public void WriteXml(XmlWriter writer)
+	{
+		// 序列化时自动调用
+		// 1. 写属性
+		writer.WriteAttributeString("test1", this.test1.toString());
+		// 2. 写节点
+		writer.WriteElementString("test1", this.test1.toString());
+		// 3. 写包裹节点
+		Xmlserializer s = new Xmlserializer(typeof(int));
+		writer.WriteStartElement("test1");
+		s.Serialize(writer, test1);
+		writer.WriteEndElement();
+	}
+}
+
+public class Main: MonoBehaviour
+{
+	void Start()
+	{
+		Test1 t = new Test1();
+		// 省略序列化和反序列化内容
+	}
+}
+```
+### 让Dictionary支持序列化
+
+思路：继承`Dictionary`，然后实现`Ixmlserializable`接口
+
+```
+public class SerializerDictionary<TKey, TValue> : Dictionary<TKey, TValue>, Ixmlserializable
+{	
+	public XmlSchema GetSchema()
+	{
+		return null;
+	}
+	
+	public void ReadXml(XmlReader reader)
+	{
+		XmlSerializer keySer = new XmlSerializer(typeof(TKey));
+		XmlSerializer ValueSer = new XmlSerializer(typeof(TValue));
+		
+		// 跳过根节点
+		reader.Read();
+		
+		while(reader.NodeType != XmlNodeType.EndElemenrt)
+		{
+			TKey key = (TKey)keySer.Deserialize(reader);
+			TValue value = (TValue)keySer.Deserialize(reader);
+			this.Add(key, value);
+		}
+		
+		reader.Read();
+	}
+	
+	public void WriteXml(XmlWriter writer)
+	{
+		XmlSerializer keySer = new XmlSerializer(typeof(TKey));
+		XmlSerializer ValueSer = new XmlSerializer(typeof(TValue));
+		
+		foreach(KeyValuePair<TKey, TValue> kv in this)
+		{
+			// 键值对的序列化
+			keySer.Serialize(writer, kv.Key);
+			ValueSer.Serialize(writer, kv.Value);
+		}
+	}
+}
+
+public class Main: MonoBehaviour
+{
+	void Start()
+	{
+		TestLesson4 tl4 = new TestLesso4()
+		tl4.dic = new SerializerDictionary<int, string>();
+		// 省略序列化和反序列化
+	}
+}
+```

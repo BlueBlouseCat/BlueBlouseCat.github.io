@@ -1,6 +1,6 @@
 ---
 title: Unity之物理系统
-tag:
+tags:
   - Unity
   - 物理系统
 date: 2025-11-04 14:58
@@ -300,21 +300,29 @@ Physics.OverlapCapsuleNonAlloc(Vector3.zero, Vector3.up, 1, colliders)
 **作用：** 在指定点发射一个指定方向的射线，判断该射线与哪些碰撞器相交，得到相应对象。
 ## 如何进行射线检测
 ### 声明射线对象
+
 1. 3D世界中的射线
+
 ```
 // 参数1：起点
 // 参数2：方向向量
 Ray r = new Ray(Vector3.right, Vector3.forward); // Ray是Unity中提供的一个类
 ```
+
 `Ray`中的参数：
 	1. 起点：`r.origin`
 	2. 方向：`r.direction`
+
+---
+
 2. 摄像机发射的射线
+
 ```
 // 起点：屏幕位置
 // 方向：摄像机视口方向
 Ray r2 = Camera.main.ScreenPointToRay(Input.mousePosition);
 ```
+
 ### 射线碰撞检测
 **注意：** 
 	1. 射线检测也是瞬时的，执行代码时进行一次射线检测。

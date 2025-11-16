@@ -1,5 +1,7 @@
 ---
 title: 我的第一篇博客
+tags:
+  - 个人日记
 cover: https://tymimg.yuzhiboliuhua.cn/best.jpg
 categories: 个人日记
 ---

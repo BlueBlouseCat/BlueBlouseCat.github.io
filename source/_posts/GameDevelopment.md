@@ -4,7 +4,7 @@ tags:
   - Unity
   - 游戏开发
 date: 2025-11-14 10:21
-cover: https://tymimg.yuzhiboliuhua.cn/Cover/C.png
+cover: https://tymimg.yuzhiboliuhua.cn/Cover/Unity.png
 categories: Unity
 ---
 这篇文章记录了游戏开发中常用的一些知识点及处理方法。

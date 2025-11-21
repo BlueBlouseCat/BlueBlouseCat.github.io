@@ -3,7 +3,7 @@ title: C#之面向对象
 tags:
   - Unity
 date: 2025-11-10 15:21
-cover: https://tymimg.yuzhiboliuhua.cn/Cover/Csharp.jpg
+cover: https://tymimg.yuzhiboliuhua.cn/Cover/Csharp.png
 categories: Unity
 ---
 这篇文章将会记录Csharp之面向对象的内容。

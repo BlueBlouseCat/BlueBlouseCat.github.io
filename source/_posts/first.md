@@ -2,7 +2,7 @@
 title: 我的第一篇博客
 tags:
   - 个人日记
-cover: https://tymimg.yuzhiboliuhua.cn/best.jpg
+cover: https://tymimg.yuzhiboliuhua.cn/liuhua/best.jpg
 categories: 个人日记
 ---
 __欢迎光临我的博客！！在这里我将记录我的学习生活，有时也会更新一些自己的心得体会，大家可以随时来看看QvQ__

@@ -59,6 +59,71 @@ void Update()
 }
 ```
 
+## 跑步与走路切换(融合树实现)
+
+要实现按下Shift键从走路切换到跑步，抬起时从跑步切换到走路。
+
+```
+public calss Test : MonoBehaviour
+{
+	private float dValue = 0.5f;
+	
+	void Start()
+	{
+		animator = this.GetComponent<Animator>();
+	}
+	
+	void Update()
+	{
+		animator.SetFloat("Speed", Input.GetAxis("Vertical") * dValue);
+		
+		if(Input.GetKeyDown(KeyCode.LeftShift))
+			dValue = 1;
+		if(Input.GetKeyUp(KeyCode.LeftShift))
+			dValue = 0.5f;
+	}
+}
+```
+
+## 控制角色部分旋转
+
+思路：人物本来就在不停移动，在这个过程中，人物会一直看向一个点。在头部加上一个空对象，指向看向的点，当这个向量旋转时就会得到一个新的点，从而使人物部分旋转
+
+
+![[Pasted image 20251208204210.png]]
+
+```
+public class Test : MonoBehaviour
+{
+	private Animator animator;
+	
+	public Transform headPos;
+	// x方向鼠标旋转了多少角度
+	private float chageAngleX;
+	
+	void Start()
+	{
+		animator = this.GetComponent<Animator>();
+	}
+	void Update()
+	{
+		// 控制左右移动
+		animator.SetFloat("x", Input.GetAxis("Horizontal"));
+		animator.SetFloat("y", Input.GetAxis("Vertical"));
+		
+		// 角度累加
+		chageAngleX += Input.GetAxis("Mouse X");
+		changeAngleX = Mathf.Clamp(changeAngleX, -30, 30);// 加紧函数限制范围
+	}
+	private void OnAnimatorIK(int layerIndex)
+	{
+		animator.SetLookAtWeight(1, 1, 1);
+		Vector3 pos = Quaternion.AngleAxis(changeAgleX, Vector3.up) * (headPos.position + headPos.forward * 10);
+		animator.SetLookAtPosition(pos);
+	}
+}
+```
+
 # 地图
 ## 2D层级显示
 

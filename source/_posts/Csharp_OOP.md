@@ -1,15 +1,11 @@
 ---
 title: C#之面向对象
-tags:
-  - Unity
+tags: CSharp
 date: 2025-11-10 15:21
 cover: https://tymimg.yuzhiboliuhua.cn/Cover/Csharp.png
-categories: Unity
+categories: 高级编程语言/C#
+description: C#是游戏开发（尤其Unity生态）的主流语言，其对面向对象（OOP）思想的完美适配是核心原因之一。本文结合游戏开发场景，梳理C#面向对象的封装、继承、多态核心特性，是学习C#面向对象的实战型笔记。
 ---
-这篇文章将会记录Csharp之面向对象的内容。
-
----
-
 # 封装
 
 ---

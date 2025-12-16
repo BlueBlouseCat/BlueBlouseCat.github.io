@@ -5,12 +5,9 @@ tags:
   - 游戏开发
 date: 2025-11-14 10:21
 cover: https://tymimg.yuzhiboliuhua.cn/Cover/Unity.png
-categories: Unity
+categories: Unity/开发
+description: 这篇文章记录了游戏开发中常用的一些知识点及问题处理方法。
 ---
-这篇文章记录了游戏开发中常用的一些知识点及处理方法。
-
----
-
 # UI
 ## 血量
 ### 血条
@@ -24,7 +21,7 @@ categories: Unity
 
 思路如下：
 
-![边界判断](https://tymimg.yuzhiboliuhua.cn/GameDevelopment/屏幕限制.png)
+![边界判断](https://tymimg.yuzhiboliuhua.cn/GameDevelopment/Screen.png)
 
 记录玩家之前的位置和玩家现在的位置，判断玩家当前的位置，如果当前位置超出了屏幕范围，则把玩家位置拉回之前的位置。
 

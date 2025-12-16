@@ -5,9 +5,7 @@ tags:
 date: 2025-9-12 12:12
 cover: https://tymimg.yuzhiboliuhua.cn/post1/cover1.jpg
 categories: blog
----
-__这篇文章用于记录更新博客相关的一些操作。__
-
+description: 从0开始搭建博客，这篇文章用于记录更新博客相关的一些操作。
 ---
 # 图片更新
 ## 上传图片到仓库中

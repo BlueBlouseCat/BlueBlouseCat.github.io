@@ -5,11 +5,9 @@ tags:
   - 物理系统
 date: 2025-11-04 14:58
 cover: https://tymimg.yuzhiboliuhua.cn/Cover/UnityBlenderT.png
-categories: Unity
+categories: Unity/核心系统
+description: 这篇文章记录了Unity中物理系统相关（未完待续）
 ---
-这篇文章记录了Unity中物理系统相关（未完待续）
-
-****
 # 碰撞检测
 **碰撞产生的条件：两个物体都有碰撞器，至少一个物体有刚体**
 碰撞器：用来表现一个3D物体的体积

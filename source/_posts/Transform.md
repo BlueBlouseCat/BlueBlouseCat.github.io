@@ -2,10 +2,12 @@
 title: Unity插件之Transform
 tags:
   - Unity
-date: 2025-11-11 20:45
-cover: https://tymimg.yuzhiboliuhua.cn/Cover/Transform.jpg
+date: '2025-11-11 20:45'
+cover: 'https://tymimg.yuzhiboliuhua.cn/Cover/Transform.jpg'
 categories: Unity/插件
-description: "`Transform`是Unity中物体的一个基础插件，只要有一个GameObject物体，必然会有`Transform`插件。游戏对象（GameObject）**位移、旋转、缩放、父子关系、坐标转换**等相关操作都由它处理。"
+description: >-
+  `Transform`是Unity中物体的一个基础插件，只要有一个GameObject物体，必然会有`Transform`插件。游戏对象（GameObject）**位移、旋转、缩放、父子关系、坐标转换**等相关操作都由它处理。
+abbrlink: 180b0572
 ---
 # 位置、位移和朝向
 

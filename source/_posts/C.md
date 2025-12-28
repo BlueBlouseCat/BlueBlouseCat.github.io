@@ -2,10 +2,11 @@
 title: C语言学习笔记
 tags:
   - C
-date: 2025-11-1 15:08
-cover: https://tymimg.yuzhiboliuhua.cn/Cover/C.png
+date: '2025-11-1 15:08'
+cover: 'https://tymimg.yuzhiboliuhua.cn/Cover/C.png'
 categories: 高级编程语言/C
 description: 这篇文章是关于C语言的笔记，并不完善，仅供个人学习。
+abbrlink: '13675369'
 ---
 # 基础
 

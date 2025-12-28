@@ -2,9 +2,10 @@
 title: 我的第一篇博客
 tags:
   - 个人日记
-cover: https://tymimg.yuzhiboliuhua.cn/liuhua/best.jpg
+cover: 'https://tymimg.yuzhiboliuhua.cn/liuhua/best.jpg'
 categories: 个人经历/日记
 description: 欢迎光临我的博客！！在这里我将记录我的学习生活，有时也会更新一些自己的心得体会，大家可以随时来看看QvQ
+abbrlink: d95d7e09
 ---
 # 自我介绍
 我的笔名叫做大鱼飞九草，来自四川成都。平时喜欢追番、打游戏，喜欢的运动是羽毛球乒乓球，性格ISFJ的金牛座一枚。

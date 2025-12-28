@@ -2,11 +2,12 @@
 title: 数据持久化
 tags:
   - Unity
-  - "#数据持久化"
-date: 2025-11-07 17:41
-cover: https://tymimg.yuzhiboliuhua.cn/Cover/DataPersistance.jpg
+  - '#数据持久化'
+date: '2025-11-07 17:41'
+cover: 'https://tymimg.yuzhiboliuhua.cn/Cover/DataPersistance.jpg'
 description: 临时储存在内存中的数据如何保存在本地呢？如何实现游戏中的存档操作？这篇文章将会记录关于数据持久化的内容。
 categories: Unity/数据持久化
+abbrlink: 9b82fc53
 ---
 # 数据持久化
 1. 概念：

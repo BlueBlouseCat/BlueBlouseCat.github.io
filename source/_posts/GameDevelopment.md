@@ -3,10 +3,11 @@ title: 游戏开发
 tags:
   - Unity
   - 游戏开发
-date: 2025-11-14 10:21
-cover: https://tymimg.yuzhiboliuhua.cn/Cover/Unity.png
+date: '2025-11-14 10:21'
+cover: 'https://tymimg.yuzhiboliuhua.cn/Cover/Unity.png'
 categories: Unity/开发
 description: 这篇文章记录了游戏开发中常用的一些知识点及问题处理方法。
+abbrlink: f965247b
 ---
 # UI
 ## 血量

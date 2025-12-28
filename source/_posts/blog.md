@@ -2,10 +2,11 @@
 title: 图片更新及文章更新
 tags:
   - 博客
-date: 2025-9-12 12:12
-cover: https://tymimg.yuzhiboliuhua.cn/post1/cover1.jpg
+date: '2025-9-12 12:12'
+cover: 'https://tymimg.yuzhiboliuhua.cn/post1/cover1.jpg'
 categories: blog
 description: 从0开始搭建博客，这篇文章用于记录更新博客相关的一些操作。
+abbrlink: d787c39e
 ---
 # 图片更新
 ## 上传图片到仓库中

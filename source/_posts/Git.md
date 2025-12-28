@@ -3,10 +3,11 @@ title: Git学习笔记
 tags:
   - Git
   - GitHub
-date: 2025-12-16 16:18
-cover: https://tymimg.yuzhiboliuhua.cn/post1/cover1.jpg
+date: '2025-12-16 16:18'
+cover: 'https://tymimg.yuzhiboliuhua.cn/post1/cover1.jpg'
 categories: blog
 description: 本篇文章是GIT的学习笔记，供个人学习。
+abbrlink: a91eaa72
 ---
 
 这个是更详细的教程，主要用到第六条：

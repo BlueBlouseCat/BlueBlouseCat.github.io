@@ -56,7 +56,7 @@ jobs:
       - name: 部署到Github
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          token: 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
+          token: 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
           repository-name: BlueBlouseCat/BlueBlouseCat.github.io
           branch: master
           folder: public

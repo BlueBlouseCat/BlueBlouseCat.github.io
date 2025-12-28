@@ -101,7 +101,9 @@ theme: butterfly
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  - type: git
+    repository: git@github.com:BlueBlouseCat/BlueBlouseCat.github.io.git
+    branch: main
 
 # abbrlink config
 abbrlink:

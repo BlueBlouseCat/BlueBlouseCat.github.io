@@ -9,7 +9,7 @@ description: 从0开始搭建博客，这篇文章用于记录更新博客相关
 ---
 # 图片更新
 ## 上传图片到仓库中
-打开hithub，选择图片库
+打开hithub，选择图片库    
 ![](https://tymimg.yuzhiboliuhua.cn/post1/1.jpeg)
 ![](https://tymimg.yuzhiboliuhua.cn/post1/1.jpeg)
 ![](https://tymimg.yuzhiboliuhua.cn/post1/2.jpeg)

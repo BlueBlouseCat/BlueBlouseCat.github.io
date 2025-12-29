@@ -62,7 +62,7 @@ favicon: https://tymimg.yuzhiboliuhua.cn/wo.jpg
 
 # Avatar（头像）
 avatar: 
-  img: https://tymimg.yuzhiboliuhua.cn/me.jpg
+  img: https://tymimg.yuzhiboliuhua.cn/liuhua/me.jpg
   effect: false
 
 # Disable all banner images
@@ -97,7 +97,7 @@ footer_img: false
 
 # Website Background
 # Can set it to color or image url
-background: https://tymimg.yuzhiboliuhua.cn/wa.jpg
+background: https://tymimg.yuzhiboliuhua.cn/liuhua/wa.jpg
 
 cover:
   # Disable the cover or notwa

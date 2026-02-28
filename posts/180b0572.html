@@ -1,0 +1,374 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Unity插件之Transform | MeiMeiBlog</title><meta name="author" content="大鱼飞九草"><meta name="copyright" content="大鱼飞九草"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Transform是Unity中物体的一个基础插件，只要有一个GameObject物体，必然会有Transform插件。游戏对象（GameObject）位移、旋转、缩放、父子关系、坐标转换等相关操作都由它处理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity插件之Transform">
+<meta property="og:url" content="http://tymblog.yuzhiboliuhua.cn/posts/180b0572.html">
+<meta property="og:site_name" content="MeiMeiBlog">
+<meta property="og:description" content="Transform是Unity中物体的一个基础插件，只要有一个GameObject物体，必然会有Transform插件。游戏对象（GameObject）位移、旋转、缩放、父子关系、坐标转换等相关操作都由它处理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tymimg.yuzhiboliuhua.cn/Cover/Transform.jpg">
+<meta property="article:published_time" content="2025-11-11T12:45:00.000Z">
+<meta property="article:modified_time" content="2026-02-15T14:34:44.793Z">
+<meta property="article:author" content="大鱼飞九草">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tymimg.yuzhiboliuhua.cn/Cover/Transform.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Unity插件之Transform",
+  "url": "http://tymblog.yuzhiboliuhua.cn/posts/180b0572.html",
+  "image": "https://tymimg.yuzhiboliuhua.cn/Cover/Transform.jpg",
+  "datePublished": "2025-11-11T12:45:00.000Z",
+  "dateModified": "2026-02-15T14:34:44.793Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "大鱼飞九草",
+      "url": "http://tymblog.yuzhiboliuhua.cn/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://tymimg.yuzhiboliuhua.cn/liuhua/wo.jpg"><link rel="canonical" href="http://tymblog.yuzhiboliuhua.cn/posts/180b0572.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="manifest" href="/manifest.json"/><meta name="msapplication-TileColor" content="#49B1F5"/><link rel="apple-touch-icon" sizes="180x180" href="/img/wo.jpg"/><link rel="icon" type="image/png" sizes="32x32" href="/img/wo.jpg"/><link rel="icon" type="image/png" sizes="16x16" href="/img/wo.jpg"/><link rel="mask-icon" href="/img/wo.jpg" color="#5bbad5"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Unity插件之Transform',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://www.fomal.cc/static/css/runtime.min.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="MeiMeiBlog" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://tymimg.yuzhiboliuhua.cn/liuhua/wa.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/liuhua/me.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tag/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://tymimg.yuzhiboliuhua.cn/Cover/Transform.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">MeiMeiBlog</span></a><a class="nav-page-title" href="/"><span class="site-name">Unity插件之Transform</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tag/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Unity插件之Transform</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-11-11T12:45:00.000Z" title="发表于 2025-11-11 20:45:00">2025-11-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-15T14:34:44.793Z" title="更新于 2026-02-15 22:34:44">2026-02-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Unity-%E6%8F%92%E4%BB%B6/">Unity/插件</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="位置、位移和朝向"><a href="#位置、位移和朝向" class="headerlink" title="位置、位移和朝向"></a>位置、位移和朝向</h1><h2 id="必备知识：Vector3"><a href="#必备知识：Vector3" class="headerlink" title="必备知识：Vector3"></a>必备知识：Vector3</h2><p>Vector3 主要是用来表示三维坐标系中的一个点或是一个向量。</p>
+<ol>
+<li>申明：</li>
+</ol>
+<p><code>Vector3 v = new Vector3();</code></p>
+<p>创建了一个<code>Vector3</code>类的实例<code>v</code>，并调用<code>Vector3</code>的无参构造函数来初始化这个实例，xyz都为0，也可以只传xy，z默认为0</p>
+<ol start="2">
+<li>计算</li>
+</ol>
+<p>使用运算符重载可以使向量相<strong>加减</strong>，<strong>数乘</strong>，<strong>除</strong>，就是每个向量对应位置相加减，示例如下：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Vector3 v1 = <span class="keyword">new</span> Vector3(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">Vector3 v2 = <span class="keyword">new</span> Vector3(<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">print(v1 + v2);</span><br><span class="line">print(v1 - v2);</span><br><span class="line">print(v1 * <span class="number">10</span>);</span><br><span class="line">print(v2 / <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>) <span class="comment">// +</span></span><br><span class="line">(<span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>) <span class="comment">// -</span></span><br><span class="line">(<span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>) <span class="comment">// x*</span></span><br><span class="line">(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>) <span class="comment">// /</span></span><br></pre></td></tr></table></figure>
+
+<p>常用的向量:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Vector3.zero <span class="comment">//000</span></span><br><span class="line">Vector3.right <span class="comment">//100</span></span><br><span class="line">Vector3.left <span class="comment">//-100</span></span><br><span class="line">Vector3.forward <span class="comment">//001</span></span><br><span class="line">Vector3.back <span class="comment">//00-1</span></span><br><span class="line">Vector3.up <span class="comment">//010</span></span><br><span class="line">Vector3.down <span class="comment">//0-10</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>计算两个点之间的距离的方法</strong>：<code>Vector3.Distance(v1, v2);</code></p>
+<h2 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h2><ul>
+<li>相对世界坐标系：<code>this.transform.position</code></li>
+<li>相对父对象：<code>this.transform.localPosition</code></li>
+</ul>
+<p><strong>注意：位置的赋值不能单独改变xyz，只能整体改变，改变方式如下：</strong></p>
+<p><code>this.transform.position = new Vector3(10, 10, 10);</code></p>
+<p><strong>也可以像这样：</strong></p>
+<p><code>this.transform.position = Vector3.up * 10;</code></p>
+<p>如果只想改一个值x，yz想和原有坐标保持一致，可以这样处理：</p>
+<p><em>方式1：直接赋值</em></p>
+<p><code>this.transform.position = new Vector3(19, this.transform.position.y, this.transform.position.z);</code></p>
+<p><em>方式2：先取出来再赋值</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vector3 vPos = <span class="keyword">this</span>.transform.localPosition;</span><br><span class="line">vPos.x = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">this</span>.transform.localPosition = vPos;</span><br></pre></td></tr></table></figure>
+
+<h2 id="位移"><a href="#位移" class="headerlink" title="位移"></a>位移</h2><p>先来理解坐标系下位移的计算公式：路程 &#x3D; 方向 * 速度 * 时间</p>
+<p><em>方式1：自己计算</em></p>
+<p>最终位置 &#x3D; 当前位置 + 要移动的距离</p>
+<p><code>this.transform.position += Vector3.forward * 1 * Time.deltaTime;</code></p>
+<p><em>方式2：API</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1：表示位移多少 路程 = 方向 * 速度 * 时间</span></span><br><span class="line"><span class="comment">// 参数2：表示 相对坐标系（默认相对于自己坐标系）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对于世界坐标系的 z轴 动</span></span><br><span class="line"><span class="keyword">this</span>.transform.Translate(Vector3.forward * <span class="number">1</span> * Time.deltaTime, Space.World);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对于世界坐标系的 自己的面朝向 动</span></span><br><span class="line"><span class="keyword">this</span>.transform.Translate(<span class="keyword">this</span>.transform.forward * <span class="number">1</span> * Time.deltaTime, Space.World);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对于自己的坐标系的 自己的面朝向向量移动（一定不会这样使用）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对于自己的坐标系的 z轴正方向移动</span></span><br><span class="line"><span class="keyword">this</span>.transform.Translate(Vector3.forward * <span class="number">1</span> * Time.deltaTime, Space.Self); </span><br></pre></td></tr></table></figure>
+
+<h2 id="朝向"><a href="#朝向" class="headerlink" title="朝向"></a>朝向</h2><p><code>this.transform.forward;</code></p>
+<h1 id="角度和旋转"><a href="#角度和旋转" class="headerlink" title="角度和旋转"></a>角度和旋转</h1><h2 id="角度相关"><a href="#角度相关" class="headerlink" title="角度相关"></a>角度相关</h2><ul>
+<li>相对世界坐标角度：<code>this.transform.eulerAngles</code></li>
+<li>相对父对象角度：<code>this.transform.localEulerAngles</code></li>
+</ul>
+<p><strong>注意：欧拉角的取值范围是0~360°，设置角度和设置位置一样，不能单独设置xyz，要一起设置。如果我们希望改变的角度是面板上显示的内容，那一定是改变相对父对象的角度。</strong></p>
+<h2 id="旋转相关"><a href="#旋转相关" class="headerlink" title="旋转相关"></a>旋转相关</h2><p><em>情况一：自转</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1： 每一帧旋转的角度</span></span><br><span class="line"><span class="comment">// 参数2： 不填就是默认相对于自己坐标系进行旋转</span></span><br><span class="line"><span class="keyword">this</span>.transform.Rotate(<span class="keyword">new</span> Vector3(<span class="number">0</span>, <span class="number">10</span>, <span class="number">0</span>) * Time.deltaTime, Space.World);</span><br></pre></td></tr></table></figure>
+
+<p><em>情况二：相对于某一根轴转</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1：相对于的轴</span></span><br><span class="line"><span class="comment">// 参数2：转动的角度 旋转速度*时间</span></span><br><span class="line"><span class="comment">// 参数3：不填默认相对于自己的坐标系进行旋转</span></span><br><span class="line"><span class="keyword">this</span>.transform.Rotate(Vector3.right, <span class="number">10</span> * Time.delataTime, Space.World);</span><br></pre></td></tr></table></figure>
+
+<p><em>情况3：相对于某一个点</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1：相对于的点</span></span><br><span class="line"><span class="comment">// 参数2：相对于哪一个点的哪一条轴</span></span><br><span class="line"><span class="comment">// 参数3：转的角度 旋转速度*时间</span></span><br><span class="line"><span class="keyword">this</span>.transform.RotateAround(Vector3.zero, Vector3.right, <span class="number">10</span> * Time.deltaTime);</span><br></pre></td></tr></table></figure>
+
+<h1 id="缩放和看向"><a href="#缩放和看向" class="headerlink" title="缩放和看向"></a>缩放和看向</h1><h2 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h2><ul>
+<li>相对于世界坐标系：<code>this.transform.lossyScale</code></li>
+<li>相对于本地坐标系（父对象）： <code>this.transform.localScale</code></li>
+</ul>
+<p><strong>注意：缩放不能只改xyz，要一起改并且都是相对于父对象的改</strong></p>
+<p>Unity没有提供关于缩放的API，如果想要让缩放发生变化，只能自己去算：<br>&#96;this.transform.localScale +&#x3D; Vector3.one * Time.deltaTime;</p>
+<h2 id="看向"><a href="#看向" class="headerlink" title="看向"></a>看向</h2><ul>
+<li>看向一个点（相当于世界坐标系）<code>this.transform.LookAt(Vector3.zero);</code></li>
+<li>看向一个对象（传入一个对象的Transform信息）<code>this.transform.LookAt(lookAtObj)</code></li>
+</ul>
+<h1 id="父子关系"><a href="#父子关系" class="headerlink" title="父子关系"></a>父子关系</h1><h2 id="儿子的操作"><a href="#儿子的操作" class="headerlink" title="儿子的操作"></a>儿子的操作</h2><ol>
+<li>获取父对象：<code>this.transform.parent</code>，之后可以获取父对象<code>name</code>等所有信息。</li>
+</ol>
+<hr>
+<ol start="2">
+<li>设置父对象：</li>
+</ol>
+<ul>
+<li>断绝父子关系：<code>this.transform.SetParent(null);</code></li>
+<li>设置父亲：<code>this.transform.SetParent(GameObject.Find(&quot;Father2&quot;).transform);</code></li>
+</ul>
+<p>设置父亲还有一种重载，在原有的API后面多了一个<code>bool</code>参数，代表是否保留世界坐标的<strong>位置、角度、缩放、信息</strong>。</p>
+<ul>
+<li><code>true</code>代表会<strong>保留</strong>世界坐标下的状态，和父对象进行计算得到本地坐标系的信息。</li>
+<li><code>false</code>代表<strong>不会保留</strong>，会直接把世界坐标系下的位置、角度、缩放直接赋值到本地坐标系下。</li>
+</ul>
+<hr>
+<ol start="3">
+<li>判断自己的爸爸是谁：</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(son.IsChildOf(<span class="keyword">this</span>.transform))</span><br><span class="line">&#123;</span><br><span class="line">	print(<span class="string">&quot;是当前脚本依附对象的儿子。&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ol start="4">
+<li>儿子的编号：</li>
+</ol>
+<ul>
+<li>得到自己当前的编号：<code>son.GetSiblingIndex();</code></li>
+<li>把自己设置为第一个儿子：<code>son.SetAsFirstSibling();</code></li>
+<li>把自己设置为最后一个儿子：<code>son.SetAsLastSibling();</code></li>
+<li>把自己设置为指定个儿子：<code>son.SetSiblingIndex(1);</code>   其中，填的编号超出了范围（负数或者更大的数）不会报错，会直接设置成最后一个编号。</li>
+</ul>
+<h2 id="父亲的操作"><a href="#父亲的操作" class="headerlink" title="父亲的操作"></a>父亲的操作</h2><ol>
+<li>获取子对象：</li>
+</ol>
+<ul>
+<li>通过编号得到自己对应的儿子：<code>this.transform.GetChild(0);</code>，返回值是<code>transform</code></li>
+<li>获取知道名字的子对象：<code>this.transform.Find(&quot;Children1&quot;);</code>，之后可以获取子对象<code>name</code>等所有信息。</li>
+</ul>
+<p><strong>注意：</strong></p>
+<ul>
+<li>返回值是儿子的<code>transform</code>信息</li>
+<li><code>transform</code>的<code>Find()</code>方法可以找到失活对象；但<code>GameObject</code>的<code>Find()</code>方法不能找到失活对象</li>
+<li>如果要找到它的孙子，可以通过<code>this.transform.Find(&quot;PM/labPM&quot;);</code>这个API找</li>
+</ul>
+<hr>
+<ol start="2">
+<li>和自己所有儿子断绝关系：<code>this.transform.DetachChildren();</code></li>
+</ol>
+<hr>
+<ol start="3">
+<li>遍历儿子：</li>
+</ol>
+<ul>
+<li>得到自己儿子的数量：<code>this.transform.childCount</code><br><strong>注意：</strong> 失活的儿子也会算数量，孙子不会计算进去</li>
+<li>遍历：</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.transform.childCount; i ++)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 处理其他逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="坐标转换"><a href="#坐标转换" class="headerlink" title="坐标转换"></a>坐标转换</h1><h2 id="世界坐标转本地坐标"><a href="#世界坐标转本地坐标" class="headerlink" title="世界坐标转本地坐标"></a>世界坐标转本地坐标</h2><p><strong>作用：可以帮我们判断相对位置</strong></p>
+<ol>
+<li><em>世界坐标系的点</em>转换为<em>相对本地坐标系的点</em></li>
+</ol>
+<ul>
+<li>受缩放影响<br><code>this.transform.InverseTransformPoint(vector3.forward);</code></li>
+</ul>
+<ol start="2">
+<li><em>世界坐标系的方向</em>转换为<em>相对本地坐标系的方向</em></li>
+</ol>
+<ul>
+<li>不受缩放影响<br><code>this.transform.InverseTransformDirection(vector3.forward);</code></li>
+<li>受缩放影响<br><code>this.transform.InverseTransformVector(vector3.forward);</code></li>
+</ul>
+<h2 id="本地坐标转世界坐标"><a href="#本地坐标转世界坐标" class="headerlink" title="本地坐标转世界坐标"></a>本地坐标转世界坐标</h2><ol>
+<li><em>本地坐标系的点</em>转换为<em>相对世界坐标系的点</em></li>
+</ol>
+<ul>
+<li>受缩放影响<br><code>this.transform.TransformPoint(Vector3.forward);</code></li>
+</ul>
+<ol start="2">
+<li><em>本地坐标系的方向</em>转换为<em>相对世界坐标系的方向</em></li>
+</ol>
+<ul>
+<li>不受缩放影响<br><code>this.transform.TransformDirection(vector3.forward);</code></li>
+<li>受缩放影响<br><code>this.transform.TransformVector(vector3.forward);</code></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://tymblog.yuzhiboliuhua.cn">大鱼飞九草</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://tymblog.yuzhiboliuhua.cn/posts/180b0572.html">http://tymblog.yuzhiboliuhua.cn/posts/180b0572.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://tymblog.yuzhiboliuhua.cn" target="_blank">MeiMeiBlog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Unity/">Unity</a></div><div class="post-share"><div class="social-share" data-image="https://tymimg.yuzhiboliuhua.cn/Cover/Transform.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/eda74239.html" title="C#之面向对象"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/Csharp.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">C#之面向对象</div></div><div class="info-2"><div class="info-item-1">C#是游戏开发（尤其Unity生态）的主流语言，其对面向对象（OOP）思想的完美适配是核心原因之一。本文结合游戏开发场景，梳理C#面向对象的封装、继承、多态核心特性，是学习C#面向对象的实战型笔记。</div></div></div></a><a class="pagination-related" href="/posts/f965247b.html" title="游戏开发"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/Unity.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">游戏开发</div></div><div class="info-2"><div class="info-item-1">这篇文章记录了游戏开发中常用的一些知识点及问题处理方法。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/e1e8becf.html" title="Unity之音效系统"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/UnityBlenderT.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-07</div><div class="info-item-2">Unity之音效系统</div></div><div class="info-2"><div class="info-item-1">这篇文章记录了Unity中音效系统相关（未完待续）</div></div></div></a><a class="pagination-related" href="/posts/9b82fc53.html" title="存档系统之数据持久化"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/DataPersistance.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-07</div><div class="info-item-2">存档系统之数据持久化</div></div><div class="info-2"><div class="info-item-1">临时储存在内存中的数据如何保存在本地呢？如何实现游戏中的存档操作？这篇文章将会记录关于数据持久化的内容。</div></div></div></a><a class="pagination-related" href="/posts/f965247b.html" title="游戏开发"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/Unity.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-14</div><div class="info-item-2">游戏开发</div></div><div class="info-2"><div class="info-item-1">这篇文章记录了游戏开发中常用的一些知识点及问题处理方法。</div></div></div></a><a class="pagination-related" href="/posts/eda74239.html" title="UGUI"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/UGUI/UGUI.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-31</div><div class="info-item-2">UGUI</div></div><div class="info-2"><div class="info-item-1">来给你的小游戏做一个漂亮的UI画面吧，这篇文章将介绍Unity中最常用的UI系统——UGUI</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/liuhua/me.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">大鱼飞九草</div><div class="author-info-description">一只咸鱼</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/BlueBlouseCat"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/BlueBlouseCat" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:1922287870@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%8D%E7%BD%AE%E3%80%81%E4%BD%8D%E7%A7%BB%E5%92%8C%E6%9C%9D%E5%90%91"><span class="toc-number">1.</span> <span class="toc-text">位置、位移和朝向</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%85%E5%A4%87%E7%9F%A5%E8%AF%86%EF%BC%9AVector3"><span class="toc-number">1.1.</span> <span class="toc-text">必备知识：Vector3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%8D%E7%A7%BB"><span class="toc-number">1.3.</span> <span class="toc-text">位移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%9D%E5%90%91"><span class="toc-number">1.4.</span> <span class="toc-text">朝向</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%92%E5%BA%A6%E5%92%8C%E6%97%8B%E8%BD%AC"><span class="toc-number">2.</span> <span class="toc-text">角度和旋转</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%92%E5%BA%A6%E7%9B%B8%E5%85%B3"><span class="toc-number">2.1.</span> <span class="toc-text">角度相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%8B%E8%BD%AC%E7%9B%B8%E5%85%B3"><span class="toc-number">2.2.</span> <span class="toc-text">旋转相关</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%A9%E6%94%BE%E5%92%8C%E7%9C%8B%E5%90%91"><span class="toc-number">3.</span> <span class="toc-text">缩放和看向</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%A9%E6%94%BE"><span class="toc-number">3.1.</span> <span class="toc-text">缩放</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9C%8B%E5%90%91"><span class="toc-number">3.2.</span> <span class="toc-text">看向</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%88%B6%E5%AD%90%E5%85%B3%E7%B3%BB"><span class="toc-number">4.</span> <span class="toc-text">父子关系</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%84%BF%E5%AD%90%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">4.1.</span> <span class="toc-text">儿子的操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%B6%E4%BA%B2%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">4.2.</span> <span class="toc-text">父亲的操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9D%90%E6%A0%87%E8%BD%AC%E6%8D%A2"><span class="toc-number">5.</span> <span class="toc-text">坐标转换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%96%E7%95%8C%E5%9D%90%E6%A0%87%E8%BD%AC%E6%9C%AC%E5%9C%B0%E5%9D%90%E6%A0%87"><span class="toc-number">5.1.</span> <span class="toc-text">世界坐标转本地坐标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%9D%90%E6%A0%87%E8%BD%AC%E4%B8%96%E7%95%8C%E5%9D%90%E6%A0%87"><span class="toc-number">5.2.</span> <span class="toc-text">本地坐标转世界坐标</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/e1e8becf.html" title="Unity之音效系统"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/UnityBlenderT.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Unity之音效系统"/></a><div class="content"><a class="title" href="/posts/e1e8becf.html" title="Unity之音效系统">Unity之音效系统</a><time datetime="2026-02-07T11:36:00.000Z" title="发表于 2026-02-07 19:36:00">2026-02-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/eda74239.html" title="UGUI"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/UGUI/UGUI.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="UGUI"/></a><div class="content"><a class="title" href="/posts/eda74239.html" title="UGUI">UGUI</a><time datetime="2026-01-31T05:28:00.000Z" title="发表于 2026-01-31 13:28:00">2026-01-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/eda74239.html" title="C#学习笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/Csharp.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C#学习笔记"/></a><div class="content"><a class="title" href="/posts/eda74239.html" title="C#学习笔记">C#学习笔记</a><time datetime="2026-01-07T08:42:00.000Z" title="发表于 2026-01-07 16:42:00">2026-01-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/a91eaa72.html" title="Git学习笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/GitHub.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git学习笔记"/></a><div class="content"><a class="title" href="/posts/a91eaa72.html" title="Git学习笔记">Git学习笔记</a><time datetime="2025-12-16T08:18:00.000Z" title="发表于 2025-12-16 16:18:00">2025-12-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/1d3b1b44.html" title="2025 Unity中国开发挑战赛"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/UnityCN.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="2025 Unity中国开发挑战赛"/></a><div class="content"><a class="title" href="/posts/1d3b1b44.html" title="2025 Unity中国开发挑战赛">2025 Unity中国开发挑战赛</a><time datetime="2025-12-15T08:15:00.000Z" title="发表于 2025-12-15 16:15:00">2025-12-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 大鱼飞九草</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="30" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><div class="app-refresh" id="app-refresh" style="position: fixed;top: -2.2rem;left: 0;right: 0;z-index: 99999;padding: 0 1rem;font-size: 15px;height: 2.2rem;transition: all 0.3s ease;"><div class="app-refresh-wrap" style=" display: flex;color: #fff;height: 100%;align-items: center;justify-content: center;"><label>✨ 有新文章啦！ 👉</label><a href="javascript:void(0)" onclick="location.reload()"><span style="color: #fff;text-decoration: underline;cursor: pointer;">🍗点击食用🍔</span></a></div></div><script>if ('serviceWorker' in navigator) {
+if (navigator.serviceWorker.controller) {
+navigator.serviceWorker.addEventListener('controllerchange', function() {
+showNotification()
+})
+}
+window.addEventListener('load', function() {
+navigator.serviceWorker.register('/sw.js')
+})
+}
+function showNotification() {
+if (GLOBAL_CONFIG.Snackbar) {
+var snackbarBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+GLOBAL_CONFIG.Snackbar.bgLight :
+GLOBAL_CONFIG.Snackbar.bgDark
+var snackbarPos = GLOBAL_CONFIG.Snackbar.position
+Snackbar.show({
+text: '✨ 有新文章啦！ 👉',
+backgroundColor: snackbarBg,
+duration: 500000,
+pos: snackbarPos,
+actionText: '🍗点击食用🍔',
+actionTextColor: '#fff',
+onActionClick: function(e) {
+location.reload()
+},
+})
+} else {
+var showBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+'#3b70fc' :
+'#1f1f1f'
+var cssText = `top: 0; background: ${showBg};`
+document.getElementById('app-refresh').style.cssText = cssText
+}
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章..." type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v6.2.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.3.1" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/unitychan.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

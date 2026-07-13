@@ -1,0 +1,748 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Unity之物理系统 | MeiMeiBlog</title><meta name="author" content="大鱼飞九草"><meta name="copyright" content="大鱼飞九草"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="这篇文章记录了Unity中物理系统相关（未完待续）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity之物理系统">
+<meta property="og:url" content="http://tymblog.yuzhiboliuhua.cn/posts/hsio1ecf.html">
+<meta property="og:site_name" content="MeiMeiBlog">
+<meta property="og:description" content="这篇文章记录了Unity中物理系统相关（未完待续）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tymimg.yuzhiboliuhua.cn/Cover/UnityBlenderT.png">
+<meta property="article:published_time" content="2025-11-04T06:58:00.000Z">
+<meta property="article:modified_time" content="2026-07-13T12:25:13.687Z">
+<meta property="article:author" content="大鱼飞九草">
+<meta property="article:tag" content="Unity">
+<meta property="article:tag" content="物理系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tymimg.yuzhiboliuhua.cn/Cover/UnityBlenderT.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Unity之物理系统",
+  "url": "http://tymblog.yuzhiboliuhua.cn/posts/hsio1ecf.html",
+  "image": "https://tymimg.yuzhiboliuhua.cn/Cover/UnityBlenderT.png",
+  "datePublished": "2025-11-04T06:58:00.000Z",
+  "dateModified": "2026-07-13T12:25:13.687Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "大鱼飞九草",
+      "url": "http://tymblog.yuzhiboliuhua.cn/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://tymimg.yuzhiboliuhua.cn/liuhua/wo.jpg"><link rel="canonical" href="http://tymblog.yuzhiboliuhua.cn/posts/hsio1ecf.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="manifest" href="/manifest.json"/><meta name="msapplication-TileColor" content="#49B1F5"/><link rel="apple-touch-icon" sizes="180x180" href="/img/wo.jpg"/><link rel="icon" type="image/png" sizes="32x32" href="/img/wo.jpg"/><link rel="icon" type="image/png" sizes="16x16" href="/img/wo.jpg"/><link rel="mask-icon" href="/img/wo.jpg" color="#5bbad5"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Unity之物理系统',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://www.fomal.cc/static/css/runtime.min.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="MeiMeiBlog" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://tymimg.yuzhiboliuhua.cn/liuhua/wa.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/liuhua/me.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tag/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://tymimg.yuzhiboliuhua.cn/Cover/UnityBlenderT.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">MeiMeiBlog</span></a><a class="nav-page-title" href="/"><span class="site-name">Unity之物理系统</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tag/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Unity之物理系统</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-11-04T06:58:00.000Z" title="发表于 2025-11-04 14:58:00">2025-11-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-07-13T12:25:13.687Z" title="更新于 2026-07-13 20:25:13">2026-07-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Unity/">Unity</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Unity/%E6%A0%B8%E5%BF%83%E7%B3%BB%E7%BB%9F/">核心系统</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">5.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>19分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="碰撞检测"><a href="#碰撞检测" class="headerlink" title="碰撞检测"></a>碰撞检测</h1><p><strong>碰撞产生的条件：两个物体都有碰撞器，至少一个物体有刚体</strong></p>
+<ul>
+<li>碰撞器：用来表现一个3D物体的体积</li>
+<li>刚体：用来受到力的效果</li>
+</ul>
+<p><strong>作用：</strong> 实体物体之间产生物理效果</p>
+<h2 id="物理材质"><a href="#物理材质" class="headerlink" title="物理材质"></a>物理材质</h2><p>物理材质是用于决定物体产生碰撞时，这些物体之间的摩擦和弹性表现的。</p>
+<h3 id="创建物理材质"><a href="#创建物理材质" class="headerlink" title="创建物理材质"></a>创建物理材质</h3><p>Project右键 -&gt; Creat -&gt; Physic Material &#x2F; Physic Material 2D</p>
+<h3 id="物理材质的参数"><a href="#物理材质的参数" class="headerlink" title="物理材质的参数"></a>物理材质的参数</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>滑动摩擦力（Dynamic Friction）</td>
+<td>值越大摩擦力越大</td>
+</tr>
+<tr>
+<td>静摩擦力（Static Friction）</td>
+<td>值越大摩擦力越大</td>
+</tr>
+<tr>
+<td>弹性（Bounciness）</td>
+<td>值为0不会反弹，1反弹时不产生任何能量损失</td>
+</tr>
+<tr>
+<td>摩擦力组合方式（Friction Combine）</td>
+<td>Average：对两个摩擦力求平均值。&#x2F;  Minimun：使用两个值中的最小值。 &#x2F;  Maxmum：使用两个值中的最大值。&#x2F;  Multiply：两个摩擦值相乘。</td>
+</tr>
+</tbody></table>
+<p>这里的材质指的是物体自身的特性，比如弹性加上后物理会自己弹动，如果想做玩家接触后被弹飞的效果运用的是给玩家添加力。</p>
+<h2 id="物理碰撞"><a href="#物理碰撞" class="headerlink" title="物理碰撞"></a>物理碰撞</h2><h3 id="Collider-碰撞器组件"><a href="#Collider-碰撞器组件" class="headerlink" title="Collider 碰撞器组件"></a>Collider 碰撞器组件</h3><p><strong>碰撞器</strong>是用于在物理系统中表示物体体积的（形状或范围），刚体通过得到碰撞器的范围信息进行计算，判断两个物体的范围是否接触，如果接触，就会模拟力的效果产生速度和旋转。</p>
+<p>注意：同一个<code>GameObject</code>上可以挂载任意数量的<code>Collider</code>，他们会同时生效，是叠加关系，不是覆盖关系。</p>
+<p>比如，可以在一个玩家角色上挂载：</p>
+<ul>
+<li>Capsule Collider：非Trigger，防止穿墙</li>
+<li>Sphere Collider：Trigger，检测周围敌人、道具</li>
+</ul>
+<h4 id="碰撞器种类"><a href="#碰撞器种类" class="headerlink" title="碰撞器种类"></a>碰撞器种类</h4><p><em>3D碰撞器</em></p>
+<ul>
+<li><strong>盒状</strong></li>
+<li><strong>球状</strong></li>
+<li><strong>胶囊</strong></li>
+<li>网格：Mesh Collider，加了刚体的碰撞器必须勾选<code>Convex</code>才能受到力的作用</li>
+<li>轮胎：Wheel Collider</li>
+<li>地形：Terrain Collider</li>
+</ul>
+<p><strong>注：</strong> 没加粗的三种碰撞器性能消耗较高，但比较准确。</p>
+<p> <em>2D碰撞器</em></p>
+<ul>
+<li><strong>圆形碰撞器</strong></li>
+<li><strong>盒状碰撞器</strong></li>
+<li><strong>多边形碰撞器</strong></li>
+<li><strong>边界碰撞器</strong></li>
+<li>胶囊碰撞器</li>
+<li>复合碰撞器</li>
+</ul>
+<h4 id="共同参数"><a href="#共同参数" class="headerlink" title="共同参数"></a>共同参数</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>是否是触发器（Is Trigger）</strong></td>
+<td><strong>勾选即被物理引擎忽略，用于无物理效果的碰撞检测</strong></td>
+</tr>
+<tr>
+<td>物理材质（Material）</td>
+<td>可以确定碰撞体和其他对象碰撞时的表现方式（摩擦、弹性）</td>
+</tr>
+<tr>
+<td>中心点（Center）</td>
+<td>碰撞体在对象局部空间中的中心点位置</td>
+</tr>
+</tbody></table>
+<h4 id="特有参数"><a href="#特有参数" class="headerlink" title="特有参数"></a>特有参数</h4><p><em>3D碰撞器</em></p>
+<table>
+<thead>
+<tr>
+<th>碰撞器种类</th>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>盒状碰撞器（Box Collider）</td>
+<td>大小（Size）</td>
+<td>碰撞体在X、Y、Z方向上的大小</td>
+</tr>
+<tr>
+<td>球状碰撞器（Sphere Collider）</td>
+<td>半径（Radius）</td>
+<td>球形碰撞器的半径大小</td>
+</tr>
+<tr>
+<td>胶囊碰撞器（Capsule Collider）</td>
+<td>半径（Radius）&#x2F;  高度（Height）&#x2F;  轴向（Direction）</td>
+<td>胶囊体的半径 &#x2F; 高度 &#x2F; 在局部空间中的轴向</td>
+</tr>
+</tbody></table>
+<p><strong>注：</strong> 异形物体使用多种碰撞器组合，刚体对象的子对象碰撞器信息参与碰撞检测。<br>例如，要创建一个汽车（<strong>质量一定要足够大 1500kg</strong>）：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/PhysicalSystem/Car.png" alt="Car.png (204×115)"></p>
+<p><em>2D碰撞器</em></p>
+<table>
+<thead>
+<tr>
+<th>碰撞器种类</th>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>圆形碰撞器（Circle Collider 2D）</td>
+<td>半径（Radius）&#x2F;  圆心偏移位置（Offset）&#x2F;  是否被附加的2D效应器使用（Used By Effector）</td>
+<td>圆形碰撞器的半径大小 &#x2F; 圆心偏移位置 &#x2F; 被附加的2D效应器使用</td>
+</tr>
+<tr>
+<td>盒状碰撞器（Box Collider 2D）</td>
+<td>大小（Size）&#x2F;  是否附加到2D符合碰撞器（Used by Composite）&#x2F;  自动改变尺寸（Auto Tiling）&#x2F;  边缘半径（Edge Radius）</td>
+<td>碰撞体在X、Y、Z方向上的大小 &#x2F; 附加到2D符合碰撞器 &#x2F; 如果精灵渲染器组件的Draw Mode设置为Tiled平铺模式，勾选后，当改变精灵大小时将自动更新碰撞器的尺寸 &#x2F; 使四个顶点为圆角</td>
+</tr>
+<tr>
+<td>多边形碰撞器（Polygon Collider 2D）</td>
+<td>多边形顶点（Points）</td>
+<td><strong>一般用Edit Collider编辑</strong></td>
+</tr>
+<tr>
+<td>边界碰撞器（Edge Collider 2D）</td>
+<td></td>
+<td><strong>一般用Edit Collider编辑</strong>，主要用于确定地形范围</td>
+</tr>
+<tr>
+<td>胶囊碰撞器（Capsule Collider 2D）</td>
+<td>胶囊的宽高（Size）&#x2F;  轴向（Direction）</td>
+<td>胶囊体的半径 &#x2F; 高度 &#x2F; 在局部空间中的轴向</td>
+</tr>
+<tr>
+<td>复合碰撞器（Composition Collider 2D）</td>
+<td>几何学类型（Geometry Type：空心轮廓（Outlines）、实心多边形（Polygons）&#x2F;  生成类型（Generation Type）：对2D复合碰撞器或使用的其他碰撞器修改时，Unity立即生成新几何体（Sychronous）、手动生成，代码或点击按钮（Manual）&#x2F;  从复合碰撞器收集顶点时允许的最小间距值（Vertex Distance）</td>
+<td>合并碰撞体时，碰撞体顶点将组合为两种不同的几何体类型：空心可以放在内部但实心不行 &#x2F; 复合碰撞器在何时生成新几何体 &#x2F; 控制碰撞器的准确度</td>
+</tr>
+</tbody></table>
+<p><strong>注意：</strong> 复合碰撞器一定要配合刚体使用</p>
+<h3 id="区别碰撞和触发"><a href="#区别碰撞和触发" class="headerlink" title="区别碰撞和触发"></a>区别碰撞和触发</h3><ol>
+<li><p>碰撞：会产生实际的物理效果</p>
+</li>
+<li><p>触发：看起来不会产生碰撞，但是可以通过函数监听触发</p>
+</li>
+</ol>
+<h3 id="响应函数"><a href="#响应函数" class="headerlink" title="响应函数"></a>响应函数</h3><p><strong>注意： 碰撞和触发响应函数属于特殊的生命周期函数，也是通过反射调用</strong></p>
+<p>执行时机：只要挂载的对象能和别的物体产生碰撞或者触发，那么对应的这6个函数就都能被响应。</p>
+<p>特殊情况：如果是一个异形物体，刚体在父对象上，不能通过子对象上挂载脚本检测碰撞，必须挂载到这个刚体父对象上。</p>
+<h4 id="物理碰撞检测"><a href="#物理碰撞检测" class="headerlink" title="物理碰撞检测"></a>物理碰撞检测</h4><p><em>触碰时：</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnCollisionEnter</span>(<span class="params">Collision collision</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 碰撞后的执行逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Collision</code>类型的参数包含了碰到自己的对象的相关信息。</p>
+<p>关键参数：</p>
+<ol>
+<li>碰撞到的对象碰撞器的信息：<code>collision.collider</code></li>
+<li>碰撞对象的依附对象（GameObject）：<code>collision.gameObject</code></li>
+<li>碰撞对象的依附对象的位置信息：<code>collision.transform</code></li>
+<li>触碰点数相关：<code>collision.contactCount</code><br> 接触点具体的坐标：<code>ContactPoint[] pos = collision.contacts</code></li>
+</ol>
+<p><em>分离时：</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnCollisionExit</span>(<span class="params">Collision collision</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 碰撞结束执行逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>相互接触摩擦时：</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不停调用</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnCollisionStay</span>(<span class="params">Collision collision</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 相互接触摩擦时执行逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="触发器检测"><a href="#触发器检测" class="headerlink" title="触发器检测"></a>触发器检测</h4><p><em>触发时：</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnTriggerEnter</span>(<span class="params">Collider other</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 触发时执行逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>结束时：</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnTriggerExit</span>(<span class="params">Collider other</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 水乳相融状态结束执行逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>正在触发时：</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不停调用</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnTriggerStay</span>(<span class="params">Collider other</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 水乳相融状态时执行逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注：</strong> 碰撞和触发器函数都可以写成<strong>虚函数</strong>，在子类去重写逻辑。一般会把想要重写的碰撞和触发函数写成<strong>保护类型</strong>的（没有必要写成 public，因为不会自己手动调用，都是Unity通过反射帮助我们自动调用的）。</p>
+<h3 id="2D效应器"><a href="#2D效应器" class="headerlink" title="2D效应器"></a>2D效应器</h3><p><strong>2D效应器</strong>是配合2D碰撞器一起使用，可以让游戏对象在相互接触时产生一些特殊的物理作用力，快捷的实现传送带、互斥、吸引、漂浮、单向碰撞等等效果。</p>
+<p>要使一个物体变为效应器，需要添加2个组件：<strong>碰撞器（勾选Used By Editor、is Trigger）</strong> 和 <strong>效应器</strong></p>
+<p><em>共有参数：</em></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>是否启用碰撞器遮罩（Use Collidr Mask）</td>
+<td>开启后可以选择控制碰撞器作用范围</td>
+</tr>
+<tr>
+<td>阻力（区域、点：Drag、浮力：Linear Drag）</td>
+<td>受到的移动阻力系数</td>
+</tr>
+<tr>
+<td>扭矩阻力（Angular Drag）</td>
+<td>受到的旋转阻力系数</td>
+</tr>
+<tr>
+<td>施加力的角度（区域：Force Angle、浮力：Flow Angle）</td>
+<td>物体进来时受到的力的角度</td>
+</tr>
+<tr>
+<td>施加力的大小（区域、点：Force Magnitude、浮力：Flow Magnitude水平推动的力）</td>
+<td>物体进来时受到的力的大小</td>
+</tr>
+<tr>
+<td>施加力的随机大小变化（区域、点：Force Variation、浮力：Flow Variation）</td>
+<td>对物体施加的力的大小变化范围</td>
+</tr>
+</tbody></table>
+<p><em>特有参数：</em></p>
+<table>
+<thead>
+<tr>
+<th>效应器种类</th>
+<th>主要作用</th>
+<th>重要参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>区域效应器Area Effector 2D</td>
+<td>在一个区域内让游戏对象受到力和扭矩力的作用</td>
+<td>1. 是否启用世界坐标系角度（Use Global Angle）：不勾选默认区域效应器角度；2. 施加力的作用点（Force Target）：刚体质心（不产生扭矩力）、碰撞器（有扭矩力）。</td>
+</tr>
+<tr>
+<td>浮力效应器Buoyancy Effector 2D</td>
+<td>模拟流体行为，浮动和阻力相关设置，让玩家看起来像在水里移动</td>
+<td>1. 流体密度（Density）：密度越大，向上浮动的力越大；2. 浮力流体的表面位置（Surface Level）。</td>
+</tr>
+<tr>
+<td>点效应器Point Effector 2D</td>
+<td>模拟磁铁吸引或者排斥的效果</td>
+<td>1. 效应器和目标之间距离的缩放（Distance Scale）：计算距离时，会按该比值对距离进行缩放；2. 力源（Force Source）；3. 施加力的作用点（Force Target）：刚体质心（不产生扭矩力）、碰撞器（有扭矩力）；4. 力的模式（Force Mode）：Constant：忽略源和目标之间相隔的距离；Inverse Linear：反线性距离计算，距离越远，力的大小呈线性减小；Inverse Squared：反平方距离，力的大小呈指数减小，类似显示世界重力。</td>
+</tr>
+<tr>
+<td>平台效应器Platform Effector 2D（<strong>不做成触发器</strong>）</td>
+<td>2D游戏当中的平台或可往上跳跃的墙壁</td>
+<td>1. 旋转偏移量（Rotational Offset）：控制平台角度偏移；2. 是否使用单向碰撞行为（Use One Way）：可以从下方往上跳；3. 是否使用组合单向碰撞行为（Use One Way Grouping）；4. 不允许通过的表面（Surface Arc）；5. 是否在平台两侧使用摩擦（Use Side Friction）；6. 是否在平台两侧使用弹力（Use Side Bounce）；7. 左右两侧平台的响应弧度（Side Arc）。</td>
+</tr>
+<tr>
+<td>表面效应器Surface Effector 2D（<strong>不做成触发器</strong>）</td>
+<td>模拟传送带</td>
+<td>1. 表面保持的速度（Speed）；2. 速度随机增加值（Speed Variation）；3. 力的缩放（Force Scale）：缩放沿表面移动时的力。0为不施加力，值越大，速度越快。不建议设置为1，可能会抵消物体上的其他力；4. 对接触物体表面的接触点施加力（Use Contact Force）：勾选后会让物体旋转；5. 是否使用摩擦力（Use Friction）；6. 是否使用弹力（Use Bounce）。</td>
+</tr>
+</tbody></table>
+<h2 id="刚体加力"><a href="#刚体加力" class="headerlink" title="刚体加力"></a>刚体加力</h2><p>刚体就是将物体位置的改变从仅仅改变<code>Transform</code>到模拟真实的物理效果。添加刚体组件后，可以受力。</p>
+<h3 id="Rigidbody刚体组件"><a href="#Rigidbody刚体组件" class="headerlink" title="Rigidbody刚体组件"></a>Rigidbody刚体组件</h3><h4 id="Rigidbody"><a href="#Rigidbody" class="headerlink" title="Rigidbody"></a>Rigidbody</h4><p><code>Rigidbody</code>刚体组件又可以分为3D和2D的组件，3D的具体参数如下：</p>
+<ul>
+<li>Mass：质量。默认为kg，质量越大惯性越大</li>
+<li>Drag：空气阻力。值越大，物体减速越快</li>
+<li>Angular Drag：角速度阻力。影响物体旋转减速速度</li>
+<li><strong>Use Gravity</strong>：是否受重力。勾选后对象受重力下落</li>
+<li>Is Kinematic：是否运动学。勾选后不受物理引擎控制，仅通过代码或动画 HingeJoint 驱动</li>
+<li>Interpolate：插值运算。让刚体移动更平滑<ul>
+<li>None：不应用</li>
+<li>Interpolate：根据前一帧的变换来平滑变换</li>
+<li>Extrapolate：根据下一帧的估计变换来平滑变换</li>
+</ul>
+</li>
+<li>Collision Detection：碰撞检测模式。防止快速移动的对象穿过其他对象而不检测碰撞<ul>
+<li>Discrete：离散检测，性能消耗更低，但是可能存在问题</li>
+<li>Continuous：连续检测，性能消耗更高，但比较准确。</li>
+</ul>
+</li>
+<li><strong>Constraints</strong>：约束。对刚体运动的限制</li>
+</ul>
+<h4 id="Rigidbody-2D"><a href="#Rigidbody-2D" class="headerlink" title="Rigidbody 2D"></a>Rigidbody 2D</h4><p>2D刚体组件与3D刚体组件最大的区别是<code>Body Type</code>刚体类型不同。以下分别介绍他们的特殊参数：</p>
+<p><em>Dynamic 刚体动力学</em></p>
+<ul>
+<li>Material：物理材质。可以确定碰撞体和其他对象碰撞时的表现方式</li>
+<li>Simulate：碰撞器、关节模拟物理效果</li>
+<li>Use Auto Mass：是否使用自动质量</li>
+<li>Linear Drag：影响位置移动的阻力系数。值越大，阻力越大</li>
+<li>Angular Drag：影响旋转移动的阻力系数。值越大，阻力越大</li>
+<li><strong>Gravity Scale</strong>：受重力影响的程度。值越大，受重力程度越大。设为<code>0</code>认为不受重力</li>
+<li>Sleeping  Mode：刚体休眠对应的睡眠模式。<ul>
+<li>Never Sleep：从不休眠</li>
+<li>Start Awake：最初唤醒</li>
+<li>Start Asleep：最初睡眠，但可以被碰撞唤醒</li>
+</ul>
+</li>
+</ul>
+<p><strong>注意：</strong></p>
+<ol>
+<li>如果父物体上的刚体设置了物理材质，若子物体有碰撞器但是没有设置材质，则会用通用的刚体的物理材质。（查看通用物理材质：Edit -&gt; Project Settings -&gt; Physics 2D）</li>
+<li>物理材质的使用优先级：碰撞器 -&gt; 刚体 -&gt; Physics 2D</li>
+</ol>
+<p><em>Kinematic 运动学</em></p>
+<p>特点：<strong>不受力的影响，只能通过代码让其动起来</strong>。能和动态2D刚体产生碰撞，但是不会动，只会进入碰撞检测函数，因此它没有质量、摩擦系数等属性，性能消耗较低。</p>
+<ul>
+<li>Simulated：碰撞器、关节模拟物理效果。运动学类型的刚体的特殊作用：启用后，会充当一个无限质量的不可移动对象，可以和所有2D刚体产生碰撞。（如果<code>Use Full Kinematic Contacts</code> 禁用，他只会和动态刚体碰撞）</li>
+<li>Use Full Kinematic Contacts：启用：和所有2D刚体碰撞；禁用：只能和动态刚体产生碰撞</li>
+</ul>
+<p><em>Static 静态</em></p>
+<p>特点：<strong>完全不动</strong>的需要检测碰撞的对象。相当于无限质量不可移动的对象。性能消耗最小，只能和动态刚体碰撞。<strong>相当于只能检测动态刚体的碰撞器。</strong></p>
+<hr>
+<p>这3种刚体类型要怎么选择呢？</p>
+<ul>
+<li><code>Dynamic</code>动态刚体：受力作用，要动要碰撞的对象</li>
+<li><code>Kinematic</code>运动学刚体：通过刚体API移动的对象，不受力作用，但是想要进行碰撞检测。</li>
+<li><code>Static</code>静态刚体：不动不受力作用的静态物体，但是想要进行碰撞检测。</li>
+</ul>
+<h3 id="刚体休眠"><a href="#刚体休眠" class="headerlink" title="刚体休眠"></a>刚体休眠</h3><ol>
+<li><p>定义：Unity为了节约性能，会给刚体加一个休眠机制。在一定情况下不产生力的效果。</p>
+</li>
+<li><p>解决这个问题的方法：</p>
+</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取刚体是否处于休眠状态 如果是</span></span><br><span class="line"><span class="keyword">if</span>(rigidBody.IsSleeping())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 就唤醒它</span></span><br><span class="line">	rigidBody.WakeUp();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码相关"><a href="#代码相关" class="headerlink" title="代码相关"></a>代码相关</h3><h4 id="施加力"><a href="#施加力" class="headerlink" title="施加力"></a>施加力</h4><p>首先要获取刚体组件：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Rigidbody rb = GetComponent&lt;Rigidbody&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>添加力：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数：力的向量表示</span></span><br><span class="line">rb.AddForce(Vector3.forward * <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>AddForce</code> 有重载函数，第二个参数是力的模式<code>ForceMode2D</code>，主要作用是改变计算方式，也因为计算方式不同，最终的移动速度不同。</p>
+<table>
+<thead>
+<tr>
+<th>力的模式</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Acceleration</td>
+<td>给物体施加一个持续的加速度，忽略其质量（m默认为1）</td>
+</tr>
+<tr>
+<td>Force</td>
+<td>给物体添加一个持续的力，与物体的质量有关</td>
+</tr>
+<tr>
+<td>Impulse</td>
+<td>给物体添加一个瞬间的力，与物体的质量有关，忽略时间（t默认为1）。<strong>常用在弹力</strong></td>
+</tr>
+<tr>
+<td>VelocityChange</td>
+<td>给物体添加一个瞬时速度（t默认为1），忽略质量（m默认为1）</td>
+</tr>
+</tbody></table>
+<p>相对于本地坐标添加力：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rb.AddRelativeForce(Vector3.forward * <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+
+<p>另外，Unity中还自带一个力场脚本：<code>Constant Force</code>，添加这个脚本后会有持续的力的效果。主要作用是控制场景上一个物体的不停移动和旋转。</p>
+<p>参数：</p>
+<ul>
+<li>Fore：物理更新时（Edit -&gt; Project Setting -&gt; Time）施加于物体上的线性力</li>
+<li>Relative Force：物理更新时相对于刚体对象的坐标系施加线性力</li>
+<li>Torque：物理更新时施加的扭矩力</li>
+</ul>
+<h4 id="施加扭矩力"><a href="#施加扭矩力" class="headerlink" title="施加扭矩力"></a>施加扭矩力</h4><p>施加扭矩力的作用是让物体旋转。</p>
+<p>相对世界坐标：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rigidBody.AddTorque(Vector3.up * <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<p>相对本地坐标：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rigidBody.AddRelativeTorque(Vector3.forward * <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="直接改变速度"><a href="#直接改变速度" class="headerlink" title="直接改变速度"></a>直接改变速度</h4><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rigidBody.velocity = Vector3.forward * <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<p>注意：这个速度方向是相对于<strong>世界坐标系</strong>的。</p>
+<h4 id="平滑移动到指定位置"><a href="#平滑移动到指定位置" class="headerlink" title="平滑移动到指定位置"></a>平滑移动到指定位置</h4><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rigidBody.MovePosition(<span class="keyword">new</span> Vector2(<span class="number">2</span>, <span class="number">3</span>));</span><br></pre></td></tr></table></figure>
+
+<h4 id="模拟爆炸效果"><a href="#模拟爆炸效果" class="headerlink" title="模拟爆炸效果"></a>模拟爆炸效果</h4><p><strong>注：</strong> 要得到所有希望产生爆炸效果影响的对象的刚体，来执行这个方法</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1：受力大小</span></span><br><span class="line"><span class="comment">// 参数2：受力中心</span></span><br><span class="line"><span class="comment">// 参数3：受力半径</span></span><br><span class="line">rigidBody.AddExplosionForce(<span class="number">100</span>, Vector3.zero, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="范围检测"><a href="#范围检测" class="headerlink" title="范围检测"></a>范围检测</h1><p>范围检测就是用一个集合形状扫一遍区域，判断里面有没有目标物体。范围检测时瞬时的，只执行一次。</p>
+<p><strong>必备条件：</strong> 想要被范围检测的对象必须具备碰撞器</p>
+<p>在学习范围检测的相关知识前，我们先来看关于层级知识的补充。</p>
+<h2 id="必备知识：Layer"><a href="#必备知识：Layer" class="headerlink" title="必备知识：Layer"></a>必备知识：Layer</h2><p>在Unity里，层级（Layer）就是给游戏物体分类打标签，用来让物理检测只认某一类物体。</p>
+<p><code>LayerMask</code>可以用来告诉物理检测：我要检测哪些 <code>Layer</code>，忽略哪些 <code>Layer</code>。我们可以通过名字得到层级编号：<code>LayerMask.NameToLayer</code>。</p>
+<p>需要通过编号左移构建二进制数，这样每一个编号的层级都是对应位为1的2进制数，我们通过位运算可以选择想要检测层级。</p>
+<p>层级编号是 0~31（32位，与int占位一致）：</p>
+<p>每一个编号代表的都是二进制的一位：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>运算</th>
+<th>2进制表示</th>
+<th>2进制运算结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0层</td>
+<td>1 &lt;&lt; 0</td>
+<td>0000 0001</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1层</td>
+<td>1 &lt;&lt; 1</td>
+<td>0000 0010</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2层</td>
+<td>1 &lt;&lt; 2</td>
+<td>0000 0100</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3层</td>
+<td>1 &lt;&lt; 3</td>
+<td>0000 1000</td>
+<td>8</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<p>这样可以进行位运算，比如上面给出的例子是<code>0000 0001 | 0010 0000 = 0010 0001 = 33</code>，然后Unity内部进行<code>&amp;</code>运算来判断哪些层级要检测。</p>
+<h2 id="范围检测-1"><a href="#范围检测-1" class="headerlink" title="范围检测"></a>范围检测</h2><h3 id="3D范围检测"><a href="#3D范围检测" class="headerlink" title="3D范围检测"></a>3D范围检测</h3><p><em>盒状</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数一：立方体的中心点</span></span><br><span class="line"><span class="comment">// 参数二：立方体三边大小</span></span><br><span class="line"><span class="comment">// 参数三：立方体角度</span></span><br><span class="line"><span class="comment">// 参数四：检测指定层级（不填检测所有层）</span></span><br><span class="line"><span class="comment">// 参数五：是否忽略触发器（不填使用UseGlobal）</span></span><br><span class="line">Collider[] colliders = </span><br><span class="line">Physics.OverlapBox(Vector3.zero, <span class="keyword">new</span> Vector3(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>), </span><br><span class="line">	Quaternion.AngleAxis(<span class="number">45</span>, Vector3.up),</span><br><span class="line">	groundLayer, </span><br><span class="line">	QueryTriggerInteraction.UseGlobal</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
+
+<p>这个API的返回值是一个数组，表示在该范围内的所有触发器。其中参数5有以下几个选择：</p>
+<ul>
+<li>UseGlobal：使用全局设置</li>
+<li>Collide：检测触发器</li>
+<li>Ignore：忽略触发器</li>
+</ul>
+<p>第二个API的返回值是一个<code>int</code>，表示碰撞到的碰撞器数量。前面的参数和 API1 一样，后面需要传一个数组（碰撞到的东西）。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Physics.OverlapBoxNonAlloc(Vector3.zero, Vector3.one, colliders)</span><br></pre></td></tr></table></figure>
+
+<p><em>球形</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1：中心点</span></span><br><span class="line"><span class="comment">// 参数2：球半径</span></span><br><span class="line"><span class="comment">// 参数3：检测指定层级（不填检测所有层）</span></span><br><span class="line"><span class="comment">// 参数4：是否忽略触发器（不填使用UseGlobal）</span></span><br><span class="line">Physics.OverlapSphere(Vector3.zero, <span class="number">5</span>, </span><br><span class="line">	groundLayer,</span><br><span class="line">	QueryTriggerInteraction.UseGlobal</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
+
+<p>这个API的返回值是一个数组，表示在该范围内的所有触发器。</p>
+<p>另一个API如下：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Physics.OverlapSphereNonAlloc(Vector3.zero, Vector3.one, colliders)</span><br></pre></td></tr></table></figure>
+
+<p><em>胶囊形</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1：半圆一中心点</span></span><br><span class="line"><span class="comment">// 参数2：半圆二中心点</span></span><br><span class="line"><span class="comment">// 参数3：半圆半径</span></span><br><span class="line"><span class="comment">// 参数4：检测指定层级（不填检测所有层）</span></span><br><span class="line"><span class="comment">// 参数5：是否忽略触发器（不填使用UseGlobal）</span></span><br><span class="line">Physics.OverlapCapsule(Vector3.zero, Vector3.up, <span class="number">1</span> </span><br><span class="line">	groundLayer,</span><br><span class="line">	QueryTriggerInteraction.UseGlobal</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
+
+<p>另一个API如下：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Physics.OverlapCapsuleNonAlloc(Vector3.zero, Vector3.up, <span class="number">1</span>, colliders)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2D范围检测"><a href="#2D范围检测" class="headerlink" title="2D范围检测"></a>2D范围检测</h3><p><em>圆形</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Physics2D.OverlapCircle(center, radius, layerMask);</span><br></pre></td></tr></table></figure>
+
+<p>用途：地面检测、踩怪、落地判断</p>
+<p><em>矩形</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Physics2D.OverlapBox(center, size, angle, layerMask);</span><br></pre></td></tr></table></figure>
+
+<p>用途：矩形攻击范围、方形探测区域</p>
+<p><em>胶囊形</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Physics2D.OverlapCapsule(center, size, direction, angle, layerMask);</span><br></pre></td></tr></table></figure>
+
+<p>用途：角色全身碰撞判断</p>
+<p>2D范围检测相较于3D最大的不同是他有一个重载，以上三种API返回值既可以是<code>Collider2D[]</code>表示范围内的碰撞体；也可以是一个<code>bool</code>值，表示范围内是否有碰撞体。</p>
+<h1 id="射线检测"><a href="#射线检测" class="headerlink" title="射线检测"></a>射线检测</h1><p><strong>作用：</strong> 在指定点发射一个指定方向的射线，判断该射线与哪些碰撞器相交，得到相应对象。</p>
+<h2 id="声明射线对象"><a href="#声明射线对象" class="headerlink" title="声明射线对象"></a>声明射线对象</h2><ol>
+<li>3D世界中的射线</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1：起点 r.origin</span></span><br><span class="line"><span class="comment">// 参数2：方向向量 r.direction</span></span><br><span class="line">Ray r = <span class="keyword">new</span> Ray(Vector3.right, Vector3.forward); <span class="comment">// Ray是Unity中提供的一个类</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>摄像机发射的射线</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 起点：屏幕位置</span></span><br><span class="line"><span class="comment">// 方向：摄像机视口方向</span></span><br><span class="line">Ray r2 = Camera.main.ScreenPointToRay(Input.mousePosition);</span><br></pre></td></tr></table></figure>
+
+<h2 id="射线碰撞检测"><a href="#射线碰撞检测" class="headerlink" title="射线碰撞检测"></a>射线碰撞检测</h2><p><strong>注意：</strong> </p>
+<ol>
+<li>射线检测是瞬时的，执行代码时进行一次射线检测。</li>
+<li>检测的最大距离和检测指定层级都是<code>int</code>类型，传层级之前一定要传距离</li>
+</ol>
+<h3 id="只检测是否碰撞到对象"><a href="#只检测是否碰撞到对象" class="headerlink" title="只检测是否碰撞到对象"></a>只检测是否碰撞到对象</h3><p><em>API1：</em></p>
+<p>我们先准备一条射线：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ray r3 = <span class="keyword">new</span> Ray(Vector3.zero, Vector3.forward);</span><br></pre></td></tr></table></figure>
+
+<p>接下来进行射线检测（<strong>通常只需要前两个参数</strong>）：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1：射线</span></span><br><span class="line"><span class="comment">// 参数2：检测的最大距离</span></span><br><span class="line"><span class="comment">// 参数3：检测指定层级（不填检测所有层）</span></span><br><span class="line"><span class="comment">// 参数4：是否忽略触发器（不填使用UseGlobal）</span></span><br><span class="line"><span class="comment">// UseGlobal-使用全局设置 Collide-检测触发器 Ignore-忽略触发器</span></span><br><span class="line"><span class="comment">// 返回值：bool (如果碰撞到对象 返回true，否则返回false)</span></span><br><span class="line"></span><br><span class="line">Physics.Raycast(r3, <span class="number">1000</span>, <span class="number">1</span> &lt;&lt; LayerMask.NameToLayer(<span class="string">&quot;Monster&quot;</span>), </span><br><span class="line">	QueryTriggerInteraction.UseGlobal);</span><br></pre></td></tr></table></figure>
+
+<p>API1还有一个等价形式，只需要将射线参数换为射线的起点和方向</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Physics.Raycast(Vector3.zero, Vector3.forward, <span class="number">1000</span>, </span><br><span class="line">	<span class="number">1</span> &lt;&lt; LayerMask.NameToLayer(<span class="string">&quot;Monster&quot;</span>), </span><br><span class="line">	QueryTriggerInteraction.UseGlobal);</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取相交的单个物体信息"><a href="#获取相交的单个物体信息" class="headerlink" title="获取相交的单个物体信息"></a>获取相交的单个物体信息</h3><p>API2与API1的区别在于多了一个<code>out hitInfo</code>信息</p>
+<p><em>API2：</em></p>
+<p>我们先声明一个物体信息类型（结构体，值类型）的变量来接收得到的物体信息：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RaycastHit hitInfo;</span><br></pre></td></tr></table></figure>
+
+<p>接下来用API得到信息：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1：射线</span></span><br><span class="line"><span class="comment">// 参数2：Unity会通过out关键词 在函数内部处理后得到碰撞数据后返回</span></span><br><span class="line"><span class="comment">// 参数3：检测的最大距离</span></span><br><span class="line"><span class="comment">// 参数4：检测指定层级（不填检测所有层）</span></span><br><span class="line"><span class="comment">// 参数5：是否忽略触发器（不填使用UseGlobal）</span></span><br><span class="line"><span class="keyword">if</span>( Physics.Raycast(r3, <span class="keyword">out</span> hitInfo, <span class="number">1000</span>, <span class="number">1</span> &lt;&lt; LayerMask.NameToLayer(<span class="string">&quot;Monster&quot;</span>),</span><br><span class="line">	QueryTriggerInteraction.UseGlobal) )</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// hitInfo中有碰撞到的物体的信息</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>API2还有一种等价形式（将射线参数换成起点、方向）：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Physics.Raycast(Vector3.zero, Vector3.forward, <span class="keyword">out</span> hitInfo, <span class="number">1000</span>,</span><br><span class="line">	<span class="number">1</span> &lt;&lt; LayerMask.NameToLayer(<span class="string">&quot;Monster&quot;</span>),</span><br><span class="line">	QueryTriggerInteraction.UseGlobal)</span><br></pre></td></tr></table></figure>
+
+<p>其中，参数5有<code>3</code>种成员变量：</p>
+<ul>
+<li><code>UseGlobal</code>-使用全局设置</li>
+<li><code>Collider</code>-检测触发器</li>
+<li><code>Ignore</code>-忽略触发器</li>
+</ul>
+<p>这个方法返回的是一个<code>bool</code>值，如果碰撞到对象，返回<code>true</code>；否则返回<code>false</code>。得到的物体信息被储存在<code>hitInfo</code>中。要得到具体信息可以通过<code>RaycastHit</code>中的成员变量得到，具体如下：</p>
+<ul>
+<li>碰撞器信息：<code>hitInfo.collider</code></li>
+<li>碰撞到的点：<code>hitInfo.point</code> 作用：在此处创建特效</li>
+<li>法线信息：<code>hitInfo.normal</code> 作用：使美术表现更写实，比如贴弹痕</li>
+<li>位置信息：<code>hitInfo.transform.position</code></li>
+<li>与碰撞到的对象的距离：<code>hitInfo.distance</code> 作用：处理距离远近对伤害的影响 &#x2F; 子弹抛物线</li>
+</ul>
+<h3 id="获取相交的多个物体信息"><a href="#获取相交的多个物体信息" class="headerlink" title="获取相交的多个物体信息"></a>获取相交的多个物体信息</h3><p><em>API3:</em></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1：射线</span></span><br><span class="line"><span class="comment">// 参数2：检测的最大距离</span></span><br><span class="line"><span class="comment">// 参数3：检测指定层级（不填检测所有层）</span></span><br><span class="line"><span class="comment">// 参数4：是否忽略触发器（不填使用UseGlobal）</span></span><br><span class="line">RaycastHit[] hits = Physics.RaycastAll(r3, <span class="number">1000</span>, </span><br><span class="line">	<span class="number">1</span> &lt;&lt; LayerMask.NameToLayer(<span class="string">&quot;Monster&quot;</span>), </span><br><span class="line">	QueryTriggerInteraction.UseGlobal);</span><br></pre></td></tr></table></figure>
+
+<p>返回值是一个存储了所有碰撞到的物体的信息数组。</p>
+<p>API3还有一个等价形式（将射线参数变为起点和方向）：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RaycastHit[] hits = Physics.RaycastAll( Vector3.zero, Vector3.forward, <span class="number">1000</span>, </span><br><span class="line">	<span class="number">1</span> &lt;&lt; LayerMask.NameToLayer(<span class="string">&quot;Monster&quot;</span>), </span><br><span class="line">	QueryTriggerInteraction.UseGlobal );</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取相交的物体数量"><a href="#获取相交的物体数量" class="headerlink" title="获取相交的物体数量"></a>获取相交的物体数量</h3><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1：射线</span></span><br><span class="line"><span class="comment">// 参数2：碰撞到的物体信息的数组</span></span><br><span class="line"><span class="comment">// 参数3：检测的最大距离</span></span><br><span class="line"><span class="comment">// 参数4：检测指定层级（不填检测所有层）</span></span><br><span class="line"><span class="comment">// 参数5：是否忽略触发器（不填使用UseGlobal）</span></span><br><span class="line">Physics.RaycastNonAlloc(r3, hits, <span class="number">1000</span>, <span class="number">1</span> &lt;&lt; LayerMask.NameToLayer(<span class="string">&quot;Monster&quot;</span>), </span><br><span class="line">	QueryTriggerInteraction.UseGlobal);)</span><br></pre></td></tr></table></figure>
+
+<p>返回值是<code>int</code>，表示相交的物体数量。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://tymblog.yuzhiboliuhua.cn">大鱼飞九草</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://tymblog.yuzhiboliuhua.cn/posts/hsio1ecf.html">http://tymblog.yuzhiboliuhua.cn/posts/hsio1ecf.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://tymblog.yuzhiboliuhua.cn" target="_blank">MeiMeiBlog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Unity/">Unity</a><a class="post-meta__tags" href="/tags/%E7%89%A9%E7%90%86%E7%B3%BB%E7%BB%9F/">物理系统</a></div><div class="post-share"><div class="social-share" data-image="https://tymimg.yuzhiboliuhua.cn/Cover/UnityBlenderT.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/13675369.html" title="C语言学习笔记"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/C.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">C语言学习笔记</div></div><div class="info-2"><div class="info-item-1">这篇文章是关于C语言的笔记，并不完善，仅供个人学习。</div></div></div></a><a class="pagination-related" href="/posts/9b82fc53.html" title="存档系统之数据持久化"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/DataPersistance.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">存档系统之数据持久化</div></div><div class="info-2"><div class="info-item-1">临时储存在内存中的数据如何保存在本地呢？如何实现游戏中的存档操作？这篇文章将会记录关于数据持久化的内容。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/ed07a6d7.html" title="Unity之资源管理系统"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/UnityBlenderT.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-21</div><div class="info-item-2">Unity之资源管理系统</div></div><div class="info-2"><div class="info-item-1">游戏开发中的资源管理系统包含了资源的加载 / 卸载、对象池、打包压缩、热更新等内容，一个好的资源管理系统可以使游戏加载更顺畅，玩家的体验感更好。</div></div></div></a><a class="pagination-related" href="/posts/1dthwu44.html" title="Unity之音频系统"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/UnityBlenderT.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-07</div><div class="info-item-2">Unity之音频系统</div></div><div class="info-2"><div class="info-item-1">游戏中的音效会使你的游戏更加生动有趣！这篇文章记录了Unity中音频系统相关。</div></div></div></a><a class="pagination-related" href="/posts/9e0ed965.html" title="Unity插件之DOTween"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/DOTween/Cover.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-19</div><div class="info-item-2">Unity插件之DOTween</div></div><div class="info-2"><div class="info-item-1">DOTween是Unity中很好用的一个做动画的插件。它专门用来做缓动动画，几行代码就能做出很丝滑的效果。（未完待续）</div></div></div></a><a class="pagination-related" href="/posts/9e202a0.html" title="Ludum Dare 59"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Lumdum%20Dare/Cover.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-15</div><div class="info-item-2">Ludum Dare 59</div></div><div class="info-2"><div class="info-item-1">第一次多人合作参加短期GameJam，顺利完赛，学到了很多，这篇文章记录一下我的个人经历。（未完待续）</div></div></div></a><a class="pagination-related" href="/posts/1b454584.html" title="游戏开发之设计模式"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/Unity.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-10</div><div class="info-item-2">游戏开发之设计模式</div></div><div class="info-2"><div class="info-item-1">设计模式是游戏开发里前人总结好的固定代码写法套路，通过学习这些模式可以让我们的代码结构更清晰。这篇文章将记录游戏开发中最常用的3种模式。</div></div></div></a><a class="pagination-related" href="/posts/9b82fc53.html" title="存档系统之数据持久化"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/DataPersistance.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-07</div><div class="info-item-2">存档系统之数据持久化</div></div><div class="info-2"><div class="info-item-1">临时储存在内存中的数据如何保存在本地呢？如何实现游戏中的存档操作？这篇文章将会记录关于数据持久化的内容。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/liuhua/me.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">大鱼飞九草</div><div class="author-info-description">一只咸鱼</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">17</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/BlueBlouseCat"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/BlueBlouseCat" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:1922287870@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B"><span class="toc-number">1.</span> <span class="toc-text">碰撞检测</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E6%9D%90%E8%B4%A8"><span class="toc-number">1.1.</span> <span class="toc-text">物理材质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%89%A9%E7%90%86%E6%9D%90%E8%B4%A8"><span class="toc-number">1.1.1.</span> <span class="toc-text">创建物理材质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E6%9D%90%E8%B4%A8%E7%9A%84%E5%8F%82%E6%95%B0"><span class="toc-number">1.1.2.</span> <span class="toc-text">物理材质的参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E7%A2%B0%E6%92%9E"><span class="toc-number">1.2.</span> <span class="toc-text">物理碰撞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Collider-%E7%A2%B0%E6%92%9E%E5%99%A8%E7%BB%84%E4%BB%B6"><span class="toc-number">1.2.1.</span> <span class="toc-text">Collider 碰撞器组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A2%B0%E6%92%9E%E5%99%A8%E7%A7%8D%E7%B1%BB"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">碰撞器种类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B1%E5%90%8C%E5%8F%82%E6%95%B0"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">共同参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E6%9C%89%E5%8F%82%E6%95%B0"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">特有参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB%E7%A2%B0%E6%92%9E%E5%92%8C%E8%A7%A6%E5%8F%91"><span class="toc-number">1.2.2.</span> <span class="toc-text">区别碰撞和触发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.3.</span> <span class="toc-text">响应函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">物理碰撞检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8%E6%A3%80%E6%B5%8B"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">触发器检测</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2D%E6%95%88%E5%BA%94%E5%99%A8"><span class="toc-number">1.2.4.</span> <span class="toc-text">2D效应器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9A%E4%BD%93%E5%8A%A0%E5%8A%9B"><span class="toc-number">1.3.</span> <span class="toc-text">刚体加力</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Rigidbody%E5%88%9A%E4%BD%93%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.1.</span> <span class="toc-text">Rigidbody刚体组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Rigidbody"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">Rigidbody</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Rigidbody-2D"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">Rigidbody 2D</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9A%E4%BD%93%E4%BC%91%E7%9C%A0"><span class="toc-number">1.3.2.</span> <span class="toc-text">刚体休眠</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E7%9B%B8%E5%85%B3"><span class="toc-number">1.3.3.</span> <span class="toc-text">代码相关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%BD%E5%8A%A0%E5%8A%9B"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">施加力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%BD%E5%8A%A0%E6%89%AD%E7%9F%A9%E5%8A%9B"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">施加扭矩力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%94%B9%E5%8F%98%E9%80%9F%E5%BA%A6"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">直接改变速度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B3%E6%BB%91%E7%A7%BB%E5%8A%A8%E5%88%B0%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">平滑移动到指定位置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E7%88%86%E7%82%B8%E6%95%88%E6%9E%9C"><span class="toc-number">1.3.3.5.</span> <span class="toc-text">模拟爆炸效果</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%8C%83%E5%9B%B4%E6%A3%80%E6%B5%8B"><span class="toc-number">2.</span> <span class="toc-text">范围检测</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%85%E5%A4%87%E7%9F%A5%E8%AF%86%EF%BC%9ALayer"><span class="toc-number">2.1.</span> <span class="toc-text">必备知识：Layer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8C%83%E5%9B%B4%E6%A3%80%E6%B5%8B-1"><span class="toc-number">2.2.</span> <span class="toc-text">范围检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3D%E8%8C%83%E5%9B%B4%E6%A3%80%E6%B5%8B"><span class="toc-number">2.2.1.</span> <span class="toc-text">3D范围检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2D%E8%8C%83%E5%9B%B4%E6%A3%80%E6%B5%8B"><span class="toc-number">2.2.2.</span> <span class="toc-text">2D范围检测</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%84%E7%BA%BF%E6%A3%80%E6%B5%8B"><span class="toc-number">3.</span> <span class="toc-text">射线检测</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%B0%84%E7%BA%BF%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.1.</span> <span class="toc-text">声明射线对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%84%E7%BA%BF%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B"><span class="toc-number">3.2.</span> <span class="toc-text">射线碰撞检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AA%E6%A3%80%E6%B5%8B%E6%98%AF%E5%90%A6%E7%A2%B0%E6%92%9E%E5%88%B0%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.2.1.</span> <span class="toc-text">只检测是否碰撞到对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%9B%B8%E4%BA%A4%E7%9A%84%E5%8D%95%E4%B8%AA%E7%89%A9%E4%BD%93%E4%BF%A1%E6%81%AF"><span class="toc-number">3.2.2.</span> <span class="toc-text">获取相交的单个物体信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%9B%B8%E4%BA%A4%E7%9A%84%E5%A4%9A%E4%B8%AA%E7%89%A9%E4%BD%93%E4%BF%A1%E6%81%AF"><span class="toc-number">3.2.3.</span> <span class="toc-text">获取相交的多个物体信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%9B%B8%E4%BA%A4%E7%9A%84%E7%89%A9%E4%BD%93%E6%95%B0%E9%87%8F"><span class="toc-number">3.2.4.</span> <span class="toc-text">获取相交的物体数量</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/d95d7e09.html" title="我的第一篇博客"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/liuhua/best.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="我的第一篇博客"/></a><div class="content"><a class="title" href="/posts/d95d7e09.html" title="我的第一篇博客">我的第一篇博客</a><time datetime="2026-07-13T12:25:13.702Z" title="发表于 2026-07-13 20:25:13">2026-07-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/a5326fe.html" title="热更新之Lua"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/HotUpdate/lua.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="热更新之Lua"/></a><div class="content"><a class="title" href="/posts/a5326fe.html" title="热更新之Lua">热更新之Lua</a><time datetime="2026-06-27T09:51:00.000Z" title="发表于 2026-06-27 17:51:00">2026-06-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/8d4b7ae1.html" title="计算机组成原理"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/ComputerOrganization/Cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机组成原理"/></a><div class="content"><a class="title" href="/posts/8d4b7ae1.html" title="计算机组成原理">计算机组成原理</a><time datetime="2026-06-26T13:01:00.000Z" title="发表于 2026-06-26 21:01:00">2026-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/e255a10a.html" title="计算机网络"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/PC/Network.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络"/></a><div class="content"><a class="title" href="/posts/e255a10a.html" title="计算机网络">计算机网络</a><time datetime="2026-06-26T13:01:00.000Z" title="发表于 2026-06-26 21:01:00">2026-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/ed07a6d7.html" title="Unity之资源管理系统"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tymimg.yuzhiboliuhua.cn/Cover/UnityBlenderT.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Unity之资源管理系统"/></a><div class="content"><a class="title" href="/posts/ed07a6d7.html" title="Unity之资源管理系统">Unity之资源管理系统</a><time datetime="2026-05-21T09:08:00.000Z" title="发表于 2026-05-21 17:08:00">2026-05-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 大鱼飞九草</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="30" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><div class="app-refresh" id="app-refresh" style="position: fixed;top: -2.2rem;left: 0;right: 0;z-index: 99999;padding: 0 1rem;font-size: 15px;height: 2.2rem;transition: all 0.3s ease;"><div class="app-refresh-wrap" style=" display: flex;color: #fff;height: 100%;align-items: center;justify-content: center;"><label>✨ 有新文章啦！ 👉</label><a href="javascript:void(0)" onclick="location.reload()"><span style="color: #fff;text-decoration: underline;cursor: pointer;">🍗点击食用🍔</span></a></div></div><script>if ('serviceWorker' in navigator) {
+if (navigator.serviceWorker.controller) {
+navigator.serviceWorker.addEventListener('controllerchange', function() {
+showNotification()
+})
+}
+window.addEventListener('load', function() {
+navigator.serviceWorker.register('/sw.js')
+})
+}
+function showNotification() {
+if (GLOBAL_CONFIG.Snackbar) {
+var snackbarBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+GLOBAL_CONFIG.Snackbar.bgLight :
+GLOBAL_CONFIG.Snackbar.bgDark
+var snackbarPos = GLOBAL_CONFIG.Snackbar.position
+Snackbar.show({
+text: '✨ 有新文章啦！ 👉',
+backgroundColor: snackbarBg,
+duration: 500000,
+pos: snackbarPos,
+actionText: '🍗点击食用🍔',
+actionTextColor: '#fff',
+onActionClick: function(e) {
+location.reload()
+},
+})
+} else {
+var showBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+'#3b70fc' :
+'#1f1f1f'
+var cssText = `top: 0; background: ${showBg};`
+document.getElementById('app-refresh').style.cssText = cssText
+}
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章..." type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v6.2.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.3.1" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/unitychan.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

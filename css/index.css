@@ -195,6 +195,8 @@ template {
 .article-sort-item-title,
 #recent-posts .recent-post-item >.recent-post-info > .article-title,
 #recent-posts .recent-post-item >.recent-post-info > .content,
+.pinned-carousel-title,
+.pinned-carousel-description,
 #aside-content .aside-list > .aside-list-item .content > .name,
 #aside-content .aside-list > .aside-list-item .content > .title,
 #aside-content .aside-list > .aside-list-item .content > .comment,
@@ -2440,6 +2442,257 @@ figure.highlight pre .javascript .function {
 }
 #recent-posts .recent-post-item >.recent-post-info > .content {
   -webkit-line-clamp: 2;
+}
+.pinned-carousel {
+  position: relative;
+  display: block !important;
+  height: 16.8em;
+  background: var(--card-bg);
+}
+@media screen and (min-width: 2000px) {
+  .pinned-carousel {
+    height: 18.8em;
+  }
+}
+@media screen and (max-width: 768px) {
+  .pinned-carousel {
+    height: 500px !important;
+  }
+}
+.pinned-carousel:hover .post-bg {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.pinned-carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.pinned-carousel-track {
+  width: 100%;
+  height: 100%;
+  -webkit-transition: -webkit-transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  -moz-transition: -moz-transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  -o-transition: -o-transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  -ms-transition: -ms-transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+}
+.pinned-carousel-slide {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+@media screen and (max-width: 768px) {
+  .pinned-carousel-slide {
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -o-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+.pinned-carousel-cover {
+  overflow: hidden;
+  width: 42%;
+  height: 100%;
+}
+@media screen and (max-width: 768px) {
+  .pinned-carousel-cover {
+    width: 100%;
+    height: 230px;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+  }
+}
+.pinned-carousel-cover a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.pinned-carousel-cover .post-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-transition: -webkit-transform 0.6s;
+  -moz-transition: -moz-transform 0.6s;
+  -o-transition: -o-transform 0.6s;
+  -ms-transition: -ms-transform 0.6s;
+  transition: transform 0.6s;
+}
+.pinned-carousel-info {
+  position: relative;
+  width: 58%;
+  padding: 0 58px 0 40px;
+}
+@media screen and (max-width: 768px) {
+  .pinned-carousel-info {
+    width: 100%;
+    padding: 22px 52px 24px 22px;
+  }
+}
+.pinned-carousel-info.no-cover {
+  width: 100%;
+  padding-left: 40px;
+}
+.pinned-carousel-badge {
+  margin-bottom: 5px;
+  color: #ff7242;
+  font-size: 0.82em;
+}
+.pinned-carousel-badge i {
+  margin-right: 6px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.pinned-carousel-title {
+  color: var(--text-highlight-color);
+  font-size: 1.55em;
+  line-height: 1.4;
+  -webkit-line-clamp: 2;
+}
+.pinned-carousel-title:hover {
+  color: #49b1f5;
+}
+.pinned-carousel-meta {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-lines: multiple;
+  -moz-box-lines: multiple;
+  -o-box-lines: multiple;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 6px 0;
+  color: var(--card-meta);
+  font-size: 0.9em;
+}
+.pinned-carousel-meta > span {
+  white-space: nowrap;
+}
+.pinned-carousel-meta i {
+  margin-right: 4px;
+}
+.pinned-carousel-meta a {
+  color: var(--card-meta);
+}
+.pinned-carousel-meta a:hover {
+  color: #49b1f5;
+  text-decoration: underline;
+}
+.pinned-carousel-separator {
+  margin: 0 4px;
+}
+.pinned-carousel-description {
+  -webkit-line-clamp: 2;
+}
+.pinned-carousel-dot {
+  position: absolute;
+  z-index: 4;
+  right: 14px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  border: 0;
+  color: var(--font-color);
+  cursor: pointer;
+}
+.pinned-carousel-dots {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  right: 24px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -o-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 7px;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.pinned-carousel-dot {
+  position: relative;
+  right: auto;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(133,133,133,0.45);
+  -webkit-transition: height 0.2s, background-color 0.2s;
+  -moz-transition: height 0.2s, background-color 0.2s;
+  -o-transition: height 0.2s, background-color 0.2s;
+  -ms-transition: height 0.2s, background-color 0.2s;
+  transition: height 0.2s, background-color 0.2s;
+}
+.pinned-carousel-dot[aria-selected='true'] {
+  height: 22px;
+  border-radius: 6px;
+  background: var(--btn-bg);
+}
+.pinned-carousel.is-static .pinned-carousel-track {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pinned-carousel-track,
+  .pinned-carousel .post-bg {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    -ms-transition: none;
+    transition: none;
+  }
 }
 #article-container .shuoshuo-item {
   margin-bottom: 20px;
